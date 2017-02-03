@@ -1,0 +1,304 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+from kivy.app import App
+from kivy.lang import Builder
+#from kivy.utils import platform
+import os
+import traceback
+import shutil
+import json
+#from OpenSSL import crypto
+import time
+import M2Crypto
+from M2Crypto import RSA, EVP
+from distutils.version import StrictVersion
+from jnius import autoclass
+from jnius import cast
+from kivy.config import Config
+Config.set('kivy', 'log_enable', 1)
+Config.write()
+
+print os.path.dirname(__file__)
+print "ANDROID_APP_PATH: %s" % os.environ['ANDROID_APP_PATH']
+print "EXTERNAL_STORAGE: %s" % os.environ['EXTERNAL_STORAGE']
+
+# GUI, somewhat like CSS.  This can also be move to a seperate kv file
+kv = '''
+<Label>:
+    font_size: '15sp'
+    font_name: "DroidSansFallback"
+    markup: True
+BoxLayout:
+    orientation: 'vertical'
+    
+    Label:
+        id: Welcome
+        text: ' Welcome to [b]ZeroNet[/b]! \\nClick links below to open sites in browser. \\n （欢迎来到ZeroNet！\\n点击以下链接在浏览器中打开网站）'
+    Label:
+        id: ZeroHello
+        text: ' [ref=http://127.0.0.1:43110/][b]ZeroHello[/b] Home page\\n（ZeroHello首页）[/ref]'
+        on_ref_press:
+            import webbrowser
+            webbrowser.open('http://127.0.0.1:43110/')
+    Label:
+        id: ZeroMe
+        text: ' [ref=http://127.0.0.1:43110/Me.ZeroNetwork.bit]P2P social network [b]ZeroMe[/b]\\n（P2P社交网络ZeroMe）[/ref]'
+        on_ref_press:
+            import webbrowser
+            webbrowser.open('http://127.0.0.1:43110/Me.ZeroNetwork.bit')
+    Label:
+        id: NewGFWTalk
+        text: ' [ref=http://127.0.0.1:43110/NewGFWTalk.bit]P2P Chinese forum [b]New GFW Talk[/b]\\n      （P2P中文论坛）[/ref]'
+        on_ref_press:
+            import webbrowser
+            webbrowser.open('http://127.0.0.1:43110/NewGFWTalk.bit')
+    Label:
+        id: Note_en
+        font_size: '10sp'
+        text: '[ref=http://127.0.0.1:43110/Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/]                                  APK Ver. APK_ver\\nTo close ZeroNet background service nicely,\\n please click ZeroHello\\'s top-left ┇ button,\\n choose Shut down ZeroNet, thanks!\\nMore info & discussions please click here! (En version)[/ref]'
+        on_ref_press:
+            import webbrowser
+            webbrowser.open('http://127.0.0.1:43110/Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/')
+    Label:
+        id: Note_zh
+        font_size: '10sp'
+        text: '[ref=http://127.0.0.1:43110/NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/]                               APK 版本号 APK_ver\\n（想要妥善地关闭ZeroNet后台服务，\\n请在浏览器中点击ZeroHello首页左上方的 ┇ 按钮,\\n 选择关闭ZeroNet，谢谢！\\n更多信息和相关讨论点这里（中文版））[/ref]'
+        on_ref_press:
+            import webbrowser
+            webbrowser.open('http://127.0.0.1:43110/NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/')
+'''
+
+# Generate a SSL certificate using module M2Crypto,  an existing one will be overwritten .
+def generate_self_signed_cert_m2(cert_dir):
+
+    if not os.path.exists(cert_dir):
+        os.makedirs(cert_dir)
+    cert_path = os.path.join(cert_dir, 'cert-rsa.pem')
+    key_path = os.path.join(cert_dir, 'key-rsa.pem')
+ 
+    if os.path.exists(cert_path):
+        os.remove(cert_path)
+    if os.path.exists(key_path):
+        os.remove(key_path)
+ 
+    # create a key pair
+    key = RSA.gen_key(2048, 65537)
+    key.save_key (key_path, None)
+    pkey = EVP.PKey() # Converting the RSA key into a PKey() which is stored in a certificate
+    pkey.assign_rsa(key)
+    
+    # create a self-signed cert, the config is copied from src/lib/opensslVerify/openssl.cnf. not sure whether making it random is good or not.
+    # time for certificate to stay valid
+    cur_time = M2Crypto.ASN1.ASN1_UTCTIME()
+    cur_time.set_time(int(time.time()) - 60*60*24)
+    expire_time = M2Crypto.ASN1.ASN1_UTCTIME()
+    expire_time.set_time(int(time.time()) + 60 * 60 * 24 * 365)
+    # creating a certificate
+    cert = M2Crypto.X509.X509()
+    cert.set_pubkey(pkey)
+    cs_name = M2Crypto.X509.X509_Name()
+    cs_name.C = "US"
+    cs_name.ST = 'NY'
+    cs_name.L = 'New York'
+    cs_name.O = 'Example, LLC'
+    cs_name.CN = 'Example Company'
+#    cs_name.Email = "example@example.com"
+    cert.set_subject(cs_name)
+    cert.set_issuer_name(cs_name)
+    cert.set_not_before(cur_time)
+    cert.set_not_after(expire_time)
+    # self signing a certificate
+    cert.sign(pkey, md="sha256")
+    cert.save_pem(cert_path)
+    return cert_path, key_path
+
+class ZeronetApp(App):
+    def get_scaled_icon(icon):  
+        Dimen = autoclass("android.R$dimen")
+        Bitmap = autoclass("android.graphics.Bitmap")
+    
+        scaled_icon = getattr(Drawable, icon)
+    
+        scaled_icon = cast("android.graphics.drawable.BitmapDrawable", service.getResources().getDrawable(scaled_icon))
+        scaled_icon = scaled_icon.getBitmap()
+    
+        res = service.getResources()
+        height = res.getDimension(Dimen.notification_large_icon_height)
+        width = res.getDimension(Dimen.notification_large_icon_width)
+        return Bitmap.createScaledBitmap(scaled_icon, width, height, False)
+        
+    def build(self):
+        
+        platform_flag = 'android'
+        
+        if platform_flag == 'android':
+#            from android import AndroidService # This AndroidService does NOT work! Changed to  jnius's autoclass
+#            service = AndroidService('ZeroNet', 'ZeroNet running, please stop it in browser')
+#            arg = '--config_file '+ os.path.join(dstdir, 'zeronet.conf') + ' --connected_limit = 5'
+#            print arg
+#            # service.start(arg)
+#            service.start()
+#            self.service = service
+            
+            from jnius import autoclass
+
+            Environment = autoclass('android.os.Environment')
+            # Store the  whole ZeroNet dir ( "zero" dir here, including all ZeroNet source code dir and  data_dir ) to public external storage in order to save phone's internal space and allow users modify them without root.
+            # But there is concern of some sensitive data e.g. users.json is accessible by other apps in the phone. So more argument to specify sensitive data dir to internal space and import users.json etc. is needed in ZeroNet itself. FIXME
+#            Context = autoclass('android.content.Context')
+#            sdpath = Environment.getExternalStorageDirectory().getAbsolutePath()
+#            print "sdpath: %s " % sdpath # sdpath points to Emulated storage root
+#            sdpath1 = App.get_running_app().user_data_dir
+#            print "sdpath1 %s " % sdpath1 # sdpath points to Emulated_storage/zeronet ( becaose of ZeronetApp)
+            # Writing to both sdpath and sdpath1 may get "Operation not permitted " even have declare WRITE_EXTERNAL_STORAGE permission when packing.
+            # But the files are successfully written to sdpath and sdpath1. Of course we can ingore the return error, but writing there may be unreliable.
+            # During test, shutil.copyfile is less likely to get the error than shutil.copy2
+
+            from plyer.platforms.android import activity, SDK_INT # plyer in pip is old and has bugs, so need to download source code manually from plyer repo to replace all the plyer source code folder downloaded by buildozer
+            service_fullname = activity.getPackageName() + '.ServiceZn'
+            service = autoclass(service_fullname)
+#            service = autoclass('android.test.myapp17.ServiceZn') # We must specify current package.name including package.domain here, e.g. io.zeronet.zeroandroid or org.zeronet.zeroapk, which is identical to corresponding one in buildozer.spec http://python-for-android.readthedocs.io/en/latest/services/
+            # service name is zn,  in the android log you can filter zn to see the ZeroNet output. The serviec name  also should be identical to corresponding one in buildozer.spec http://python-for-android.readthedocs.io/en/latest/services/
+            
+            mActivity = autoclass('org.kivy.android.PythonActivity').mActivity
+
+            srczerodir = os.path.join(os.environ['ANDROID_APP_PATH'],  'zero')
+            extdir = mActivity.getExternalFilesDir(None).getPath() # getExternalFilesDir points to Emulated_storage/Android/data/package_name(e.g.android.test.myapp17)/files/
+            dstzerodir = os.path.join(extdir, 'zero')
+            
+            pm = mActivity.getPackageManager()
+
+            APK_version = pm.getPackageInfo(activity.getPackageName(), 0).versionName
+            print " APK_version: %s " %  APK_version
+            needupdate = False
+            if not os.path.exists(os.path.join(extdir, 'env_ext.json')):
+                needupdate = True
+            else:
+                with open(os.path.join(extdir, 'env_ext.json'), 'r') as fx:
+                     env_ext_old = json.load(fx)
+                APK_version_old = env_ext_old['APK_version'] # Read APK_version from file to detemin whether need to update
+                if StrictVersion(APK_version) > StrictVersion(APK_version_old):
+                    needupdate = True
+            if needupdate == True:
+                print "Need to update"
+                try:
+                    if os.path.exists(os.path.join(extdir, "zero_backup")):
+                        shutil.rmtree(os.path.join(extdir, "zero_backup")) # Prepare for updating the exiting code and importing data
+                        print "zero_backup removed"
+                    if os.path.exists(dstzerodir):
+                        os.rename(dstzerodir,  os.path.join(extdir, "zero_backup"))
+                        print "zero renamed to zero_backup"
+                    try:
+                        shutil.copytree(srczerodir, dstzerodir ) # Copy ZeroNet entirely to external, shutil.copytree will refuse to copy if destination exists.
+                    except:
+#                        traceback.print_exc()
+                        pass
+                    print "zero copied to external zero"
+                    if os.path.exists(os.path.join(extdir, "zero_backup/data")):
+                        try:
+                            shutil.move(os.path.join(extdir, "zero_backup/data"),  os.path.join(dstzerodir,  'data')) # import data
+                        except:
+                            traceback.print_exc()
+                        print "data imported"
+                except:
+                    traceback.print_exc()
+            env_ext = dict({'APK_version':APK_version})
+            with open(os.path.join(extdir, 'env_ext.json'), "w") as fx:
+                json.dump(env_ext, fx) # Save APK_version to file for next time updating the exiting code and importing data
+            env = dict({'dstzerodir': dstzerodir})
+            with open("env.json", "w") as f:
+                json.dump(env, f) # Save the path Emulated_storage/Android/data/package_name(e.g.android.test.myapp17)/files/ to file for serviceloader.py using
+
+            generate_self_signed_cert_m2(os.path.join(dstzerodir,  'data')) # Generate a SSL certificate to 'data' folder,  existing pem files will be overwritten . TODO: read the `data_dir` in zeronet.conf
+
+            argument = ''
+            service.start(mActivity, argument) # Start service ( system will run serviceloader.py)
+            
+            print "Service started. Begin GUI..."
+            
+            # A way to test notification
+#            from os.path import dirname
+#            from os.path import join
+#            from os.path import realpath
+#            
+#            from plyer import notification
+#            from plyer.utils import platform
+#            from plyer.compat import PY2
+#            
+#            print "imported!!"
+#            
+#            title = "title test"
+#            message = "msg test"
+#            ticker = "ticker test"
+#            if PY2:
+#                title = title.decode('utf8')
+#                message = message.decode('utf8')
+#            kwargs = {'title': title, 'message': message, 'ticker': ticker}
+#            
+#            mode = 'fancy'
+#    
+#            if mode == 'fancy':
+#                kwargs['app_name'] = "Mt App17"
+#                if platform == "win":
+#                    kwargs['app_icon'] = join(dirname(realpath(__file__)),
+#                                              'plyer-icon.ico')
+#                    kwargs['timeout'] = 4
+#                else:
+#                    kwargs['app_icon'] = join(dirname(realpath(__file__)),
+#                                              'plyer-icon.png')
+#            notification.notify(**kwargs)
+
+            # Another way to test notification
+            Context = autoclass('android.content.Context')
+            Intent = autoclass('android.content.Intent')
+            PendingIntent = autoclass('android.app.PendingIntent')
+            AndroidString = autoclass('java.lang.String')
+            NotificationBuilder = autoclass('android.app.Notification$Builder')
+        
+#            service = autoclass('org.renpy.android.PythonService').mService
+
+            print "{}.R$drawable".format(activity.getPackageName())
+            print "{}.R$drawable".format('android.test.myapp17')
+
+            print "SDK_INT:"
+            print SDK_INT
+            Drawable = autoclass("{}.R$drawable".format(activity.getPackageName()))
+#            PythonService = autoclass('org.renpy.android.PythonService')
+#            service = PythonService.mService
+            text = AndroidString("text test".encode('utf-8'))
+            message = AndroidString("message test".encode('utf-8'))
+            try:
+                small_icon = getattr(Drawable, 'icon')
+                print "got icon"
+            except:
+                small_icon = getattr(Drawable, 'icon_android')
+                print "got icon_android"
+        
+#            large_icon_bitmap = get_scaled_icon('icon')
+#            large_icon_bitmap = getattr(Drawable, 'icon')
+        
+#            contentIntent = PendingIntent.getActivity(service, 0, Intent(service, service.getClass()), 0)
+#            print "contentIntent = "
+            notification_builder = NotificationBuilder(activity)
+            notification_builder.setContentTitle(text)
+            notification_builder.setContentText(message)
+            notification_builder.setSmallIcon(small_icon)
+#            notification_builder.setLargeIcon(large_icon_bitmap)
+#            notification_builder.setContentIntent(contentIntent)
+        
+            notification = notification_builder.getNotification()
+        
+            notification_service = activity.getSystemService(Context.NOTIFICATION_SERVICE)
+#            notification_service.notify(233, notification) # uncomment this line, a notification will be shown.
+#            print "notified"
+            mService = autoclass('org.kivy.android.PythonService').mService
+            aService = autoclass('android.app.Service')
+            # Want to make service foreground in order to keep less likely to be killed by android system. A notification is needed to make service foreground.
+#            aService.startForeground(233, notification) # don't know how to make service foreground. Have tried a few, no luck. FIXME
+            # If we can not make service foreground, another idea is to create 1~2 daemon services to restart ZeroNet service when it killed by android system. Then nicely-shutdown button in APK's GUI is needed. HELP NEEDED! FIXME
+        return Builder.load_string(kv.replace("APK_ver",  APK_version))
+    
+#ZeronetApp().run()
+
+if __name__ == '__main__':
+    ZeronetApp().run()
