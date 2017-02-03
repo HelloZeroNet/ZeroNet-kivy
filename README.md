@@ -37,7 +37,7 @@ The packaging is not hard, thanks to Kivy's Buildozer which automates many thing
 
 * Be careful of your phone's firewall and permission control, let the APK go.
 * If you have any problem using the web UI, you can try anther browser
-* If you wanna shut down, click ZeoHello's top-left ⋮ button, choose `shut down`
+* If you wanna shut down, click ZeroHello's top-left ⋮ button, choose `shut down`
 * You can update ZeroNet itself source code just as you do in PC: click ZeoHello's top-left ⋮ button, choose Version x.x.x( rev xxxx), regardless saying Up to date. Just choose it, you'll get newest dev version of ZeroNet
 * You can find all the ZeroNet things and do what you want in External Storage/Android/data/package_name(e.g. android.test.myapp17)/files/zero
 * If you find any bug or something, go to External Storage/Android/data/package_name(e.g. android.test.myapp17)/files/zero/log to see what it said in log
