@@ -8,9 +8,15 @@ Currently this project is in Alpha phase, lack of GUI functionalities and creati
 
 ### Screen Shot:
 
+App:
+
 ![](http://i.imgur.com/UXDqHKG.png)
 
+Home Page:
+
 ![](http://i.imgur.com/mx1nLY0.png)
+
+ZeroMe:
 
 ![](http://i.imgur.com/nog7YPG.png)
 

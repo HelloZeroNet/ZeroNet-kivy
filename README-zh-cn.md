@@ -6,11 +6,17 @@ ZeroNet的图形界面控制面板和APP打包，使用Kivy框架
 目前本项目的代码只能在Android上运行，欢迎对iOS开发感兴趣的同学加入。
 目前本项目处于Alpha阶段，其GUI缺乏功能和美工设计，代码里保留了很多用于测试的代码。请贡献你的创意，无论是美工还是代码！
 
-### Screen Shot:
+### 屏幕截图:
+
+软件界面：
 
 ![](http://i.imgur.com/UXDqHKG.png)
 
+手机浏览器打开主页效果：
+
 ![](http://i.imgur.com/mx1nLY0.png)
+
+ZeroMe浏览：
 
 ![](http://i.imgur.com/nog7YPG.png)
 
