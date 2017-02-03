@@ -1,7 +1,9 @@
 # ZeroNet-kivy
 [简体中文](./README-zh-cn.md)
+
 The GUI control panel and APP packaging for ZeroNet using Kivy framework
 [Kivy](https://kivy.org) is an open-source cross-platform GUI framework written in Python. It works on not only Android but also iOS, even desktop (Win, Linux, Mac ). 
+
 Currently the code of this repo only works on Android, anyone interested in iOS dev are welcome.
 Currently this project is in Alpha phase, lack of GUI functionalities and creative design, containing many code for testing purpose. Please feel free to contribute!
 
@@ -31,14 +33,14 @@ The packaging is not hard, thanks to Kivy's Buildozer which automates many thing
 
 ## Download APK
 
-[Download from here](./dist/ZeroNet-0.2.3-debug.apk)
+[Download from here](../../raw/master/dist/ZeroNet-0.2.3-debug.apk)
 
 ## How to use the APK
 
 * Be careful of your phone's firewall and permission control, let the APK go.
 * If you have any problem using the web UI, you can try anther browser
 * If you wanna shut down, click ZeroHello's top-left ⋮ button, choose `shut down`
-* You can update ZeroNet itself source code just as you do in PC: click ZeoHello's top-left ⋮ button, choose Version x.x.x( rev xxxx), regardless saying Up to date. Just choose it, you'll get newest dev version of ZeroNet
+* You can update ZeroNet itself source code just as you do in PC: click ZeroHello's top-left ⋮ button, choose Version x.x.x( rev xxxx), regardless saying Up to date. Just choose it, you'll get newest dev version of ZeroNet
 * You can find all the ZeroNet things and do what you want in External Storage/Android/data/package_name(e.g. android.test.myapp17)/files/zero
 * If you find any bug or something, go to External Storage/Android/data/package_name(e.g. android.test.myapp17)/files/zero/log to see what it said in log
 
