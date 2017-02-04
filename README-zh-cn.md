@@ -11,7 +11,7 @@ ZeroNet的图形界面控制面板和APP打包，使用Kivy框架
 
 软件界面：
 
-![](http://i.imgur.com/UXDqHKG.png)
+![](http://i.imgur.com/1VHvdeP.jpg)
 
 手机浏览器打开主页效果：
 

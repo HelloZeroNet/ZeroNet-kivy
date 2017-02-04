@@ -12,7 +12,7 @@ Currently this project is in Alpha phase, lack of GUI functionalities and creati
 
 App:
 
-![](http://i.imgur.com/UXDqHKG.png)
+![](http://i.imgur.com/1VHvdeP.jpg)
 
 Home Page:
 
