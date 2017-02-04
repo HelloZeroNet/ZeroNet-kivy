@@ -2,8 +2,11 @@
 [English](./README.md)
 
 ZeroNet的图形界面控制面板和APP打包，使用Kivy框架
+
 [Kivy](https://kivy.org) 是一个基于Python的跨平台的开源GUI框架。它可以部署到Android和iOS，甚至是桌面平台 (Win, Linux, Mac )。
+
 目前本项目的代码只能在Android上运行，欢迎对iOS开发感兴趣的同学加入。
+
 目前本项目处于Alpha阶段，其GUI缺乏功能和美工设计，代码里保留了很多用于测试的代码。请贡献你的创意，无论是美工还是代码！
 
 ### 屏幕截图:
@@ -51,7 +54,7 @@ ZeroMe浏览：
 * 注意你手机上的防火墙和权限控制的设置，请让本APK通过
 * 如果你浏览网站时遇到问题，请尝试其他浏览器
 * 如果你想关闭ZeroNet，请点击ZeroHello首页的左上角的⋮ 按钮，在菜单中选择关闭
-* 你可以升级ZeroNet本身的代码，方法跟在电脑上一样：点击ZeroHello首页的左上角的⋮ 按钮，在菜单中选择版本 x.x.x( rev xxxx)，不要管它是不是显示最新，就点它，就会升级到最新的开发版
+* 你可以升级ZeroNet本身的代码，方法同电脑上一样：点击ZeroHello首页的左上角的⋮ 按钮，在菜单中选择版本 x.x.x( rev xxxx)，不要管它是不是显示最新，就点它，就会升级到最新的开发版
 * 遇到bug或其他问题到外部存储/Android/data/包名如android.test.myapp17/files/zero/log里的log看看有什么异常报错
 
 ## 项目结构一览

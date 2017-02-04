@@ -2,8 +2,11 @@
 [简体中文](./README-zh-cn.md)
 
 The GUI control panel and APP packaging for ZeroNet using Kivy framework
+
 [Kivy](https://kivy.org) is an open-source cross-platform GUI framework written in Python. It works on not only Android but also iOS, even desktop (Win, Linux, Mac ). 
+
 Currently the code of this repo only works on Android, anyone interested in iOS dev are welcome.
+
 Currently this project is in Alpha phase, lack of GUI functionalities and creative design, containing many code for testing purpose. Please feel free to contribute!
 
 ### Screen Shot:
