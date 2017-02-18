@@ -10,3 +10,7 @@ env:
 	sudo apt-get install -y python-kivy
 	sudo pip install --upgrade cython==0.21
 	sudo pip install --upgrade buildozer kivy
+docker:
+	docker run -v $PWD:/data ubuntu:16.04 sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
+vagrant:
+	vagrant up
