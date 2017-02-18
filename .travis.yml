@@ -1,6 +1,8 @@
 sudo: true
 dist: trusty
 install:
-  - sudo apt-get install virtualbox vagrant
+  - sudo apt-get update
+  - sudo apt-get -y install linux-headers-$(uname -r)
+  - sudo apt-get -y install virtualbox vagrant
 script:
   - vagrant up
