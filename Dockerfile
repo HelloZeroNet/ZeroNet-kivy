@@ -9,4 +9,6 @@ RUN chmod 777 /home
 #This is required, fixes: KeyError: 'getpwuid(): uid not found: 1000'
 RUN chmod 777 /etc/passwd
 RUN make -C . env
-RUN chmod -R 777 /home
+RUN rm -rfv /home
+RUN mkdir /home
+RUN chmod 777 /home
