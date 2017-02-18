@@ -5,4 +5,5 @@ install:
   - sudo apt-get -y install linux-headers-$(uname -r)
   - sudo apt-get -y install virtualbox vagrant
 script:
-  - vagrant up
+  - vagrant init ubuntu/xenial64
+  - vagrant up --provider virtualbox
