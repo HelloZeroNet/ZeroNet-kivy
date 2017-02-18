@@ -1,4 +1,6 @@
 sudo: true
 dist: trusty
 script:
+  - mkdir .buildozer
+  - chmod 777 .buildozer
   - make docker-build docker
