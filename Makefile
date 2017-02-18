@@ -10,7 +10,7 @@ env:
 	sudo add-apt-repository ppa:kivy-team/kivy -y
 	sudo apt-get update
 	sudo apt-get install -y build-essential swig ccache git libncurses5:i386 libstdc++6:i386 libgtk2.0-0:i386 libpangox-1.0-0:i386 libpangoxft-1.0-0:i386 libidn11:i386 python2.7 python2.7-dev openjdk-8-jdk unzip zlib1g-dev zlib1g:i386
-	sudo apt-get install -y automake
+	sudo apt-get install -y automake aidl
 	sudo apt-get install -y python-kivy
 	sudo pip install --upgrade cython==0.21
 	sudo pip install --upgrade colorama appdirs sh jinja2 six
@@ -18,8 +18,8 @@ env:
 docker-build:
 	docker build -t kivy .
 docker:
-	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy make -C /home/data apk
+	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy sh -c 'echo builder:x:$UID:$UID:Builder:/home:/bin/bash | tee /etc/passwd && make -C /home/data apk'
 docker-ci:
-	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data kivy make -C /home/data apk
+	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data kivy sh -c 'echo builder:x:$UID:$UID:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data apk'
 vagrant:
 	vagrant up
