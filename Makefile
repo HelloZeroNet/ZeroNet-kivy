@@ -1,5 +1,7 @@
 apk:
-	buildozer -v android debug
+	buildozer -v android_new debug
+test:
+	buildozer -v android_new deploy logcat
 env:
 	sudo dpkg --add-architecture i386
 	sudo apt-get update
@@ -12,5 +14,9 @@ env:
 	sudo pip install --upgrade buildozer kivy
 docker:
 	docker run -v $(PWD):/data ubuntu:16.04 sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
+docker-build:
+	docker build -t kivy .
+docker-cache:
+	docker run -v $(PWD):/data kivy sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
 vagrant:
 	vagrant up

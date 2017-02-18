@@ -37,7 +37,7 @@ version.filename = %(source.dir)s/zero/src/Config.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,plyer,android,kivy
+requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,plyer,android,kivy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -47,7 +47,7 @@ requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,plyer,android,
 #garden_requirements =
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/icon.png
+presplash.filename = %(source.dir)s/splash.png
 
 # (str) Icon of the application
 icon.filename = %(source.dir)s/icon.png

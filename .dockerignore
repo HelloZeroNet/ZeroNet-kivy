@@ -1,0 +1,5 @@
+.buildozer
+dist
+bin
+.vagrant
+*.log
