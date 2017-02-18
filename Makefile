@@ -2,6 +2,7 @@ UID=$(shell id -u)
 apk:
 	buildozer -v android_new debug
 ci: #verbose exceeds log limit of 4mb! -.-
+	sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
 	buildozer android_new debug
 test:
 	buildozer -v android_new deploy logcat
