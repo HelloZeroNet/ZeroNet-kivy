@@ -17,6 +17,6 @@ env:
 docker-build:
 	docker build -t kivy .
 docker:
-	docker run -u $(UID) -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy make -C /home/data apk
+	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy make -C /home/data apk
 vagrant:
 	vagrant up
