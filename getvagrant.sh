@@ -1,10 +1,6 @@
 #!/bin/sh
 
-mir="http://archive.ubuntu.com"
-url="$mir/ubuntu/pool/universe/v/vagrant/"
-
-file_=$(curl $url --silent | grep "vagrant_[0-9.+a-z_-]*" -o | awk '!x[$0]++' | grep "deb$" | sort -r | head -n 1)
-file="$url$file_"
+url="https://releases.hashicorp.com/vagrant/1.9.1/vagrant_1.9.1_x86_64.deb"
 
 o="vagrant.deb"
 
