@@ -49,6 +49,7 @@ Vagrant.configure(2) do |config|
   #
   #   # Customize the amount of memory on the VM:
    vb.memory = "4096"
+   vb.cpus = "4"
   end
   #
   # View the documentation for the provider you are using for more
@@ -65,6 +66,7 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+    whoami
    sudo apt-get update
    sudo apt-get install -y make
    sudo make -C /vagrant env
