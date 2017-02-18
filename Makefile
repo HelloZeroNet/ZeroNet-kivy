@@ -1,5 +1,5 @@
 apk:
-	buildozer -v android_new debug
+	yes | buildozer -v android_new debug
 test:
 	buildozer -v android_new deploy logcat
 env:
@@ -13,10 +13,10 @@ env:
 	sudo pip install --upgrade cython==0.21
 	sudo pip install --upgrade buildozer kivy
 docker:
-	docker run -v $(PWD):/data ubuntu:16.04 sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
+	docker run -it -v $(PWD):/data ubuntu:16.04 sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
 docker-build:
 	docker build -t kivy .
 docker-cache:
-	docker run -v $(PWD):/data kivy sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
+	docker run -it -v $(PWD):/data kivy make -C /data apk
 vagrant:
 	vagrant up
