@@ -5,4 +5,4 @@ install:
   - chmod 777 .buildozer
 script:
   - HOME=$PWD make docker-build
-  - wait_() {sleep 1m && echo -n . && wait_} & HOME=$PWD make docker-ci
+  - bash .travis/wait.sh & HOME=$PWD make docker-ci
