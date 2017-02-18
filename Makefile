@@ -14,11 +14,9 @@ env:
 	sudo pip install --upgrade cython==0.21
 	sudo pip install --upgrade colorama appdirs sh jinja2 six
 	sudo pip install --upgrade buildozer kivy
-docker:
-	docker run -u $(UID) -it -v $(PWD):/data ubuntu:16.04 sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
 docker-build:
 	docker build -t kivy .
-docker-cache:
-	docker run -u $(UID) -it -v $(PWD):/data kivy make -C /data apk
+docker:
+	docker run -u $(UID) -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy make -C /home/data apk
 vagrant:
 	vagrant up
