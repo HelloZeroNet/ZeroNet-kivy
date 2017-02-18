@@ -4,7 +4,8 @@ install:
   - sudo apt-get update
   - sudo apt-get -y install linux-headers-$(uname -r)
   - sudo apt-get -y install virtualbox vagrant
+  - sudo bash getvagrant.sh
 script:
-#  - vagrant box add https://atlas.hashicorp.com/ubuntu/xenial64 --provider virtualbox
-  - vagrant box add ubuntu/xenial64 https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20170217.0.0/providers/virtualbox.box
+  - vagrant box add https://atlas.hashicorp.com/ubuntu/xenial64 --provider virtualbox
+#  - vagrant box add ubuntu/xenial64 https://atlas.hashicorp.com/ubuntu/boxes/xenial64/versions/20170217.0.0/providers/virtualbox.box
   - vagrant up --provider virtualbox
