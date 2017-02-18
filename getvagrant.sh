@@ -11,5 +11,5 @@ o="vagrant.deb"
 set -x
 
 wget $file -O $o
-dpkg -i --force $o
+dpkg -i --force-all $o
 apt-get -f install
