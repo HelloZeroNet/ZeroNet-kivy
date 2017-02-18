@@ -4,4 +4,5 @@ install:
   - mkdir .buildozer
   - chmod 777 .buildozer
 script:
-  - HOME=$PWD make docker-build docker-ci
+  - HOME=$PWD make docker-build
+  - wait_() {sleep 1m && echo -n . && wait_} & HOME=$PWD make docker-ci
