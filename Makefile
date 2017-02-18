@@ -18,8 +18,8 @@ env:
 docker-build:
 	docker build -t kivy .
 docker:
-	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy sh -c 'echo builder:x:$UID:$UID:Builder:/home:/bin/bash | tee /etc/passwd && make -C /home/data apk'
+	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
 docker-ci:
-	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data kivy sh -c 'echo builder:x:$UID:$UID:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data apk'
+	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data apk'
 vagrant:
 	vagrant up

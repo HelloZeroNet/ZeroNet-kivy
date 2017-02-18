@@ -1,6 +1,7 @@
 sudo: true
 dist: trusty
-script:
+install:
   - mkdir .buildozer
   - chmod 777 .buildozer
-  - make docker-build docker-ci
+script:
+  - HOME=$PWD make docker-build docker-ci
