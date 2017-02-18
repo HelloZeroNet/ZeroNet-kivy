@@ -1,5 +1,6 @@
+UID=$(shell id -u)
 apk:
-	yes | buildozer -v android_new debug
+	buildozer -v android_new debug
 test:
 	buildozer -v android_new deploy logcat
 env:
@@ -11,12 +12,13 @@ env:
 	sudo apt-get install -y build-essential swig ccache git libncurses5:i386 libstdc++6:i386 libgtk2.0-0:i386 libpangox-1.0-0:i386 libpangoxft-1.0-0:i386 libidn11:i386 python2.7 python2.7-dev openjdk-8-jdk unzip zlib1g-dev zlib1g:i386
 	sudo apt-get install -y python-kivy
 	sudo pip install --upgrade cython==0.21
+	sudo pip install --upgrade colorama appdirs sh jinja2 six
 	sudo pip install --upgrade buildozer kivy
 docker:
-	docker run -it -v $(PWD):/data ubuntu:16.04 sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
+	docker run -u $(UID) -it -v $(PWD):/data ubuntu:16.04 sh -c 'apt-get update && apt-get install make sudo -y && make -C /data env apk'
 docker-build:
 	docker build -t kivy .
 docker-cache:
-	docker run -it -v $(PWD):/data kivy make -C /data apk
+	docker run -u $(UID) -it -v $(PWD):/data kivy make -C /data apk
 vagrant:
 	vagrant up
