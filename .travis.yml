@@ -1,0 +1,6 @@
+sudo: true
+dist: trusty
+install:
+  - sudo apt-get install virtualbox vagrant
+script:
+  - vagrant up

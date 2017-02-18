@@ -4,16 +4,17 @@
 title = ZeroNet
 
 # (str) Package name
-package.name = myapp17
+package.name = zeronet
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = android.test
+package.domain = net.mkg20001
 
 # (str) Source code where the main.py live
-source.dir = .
+source.dir = src
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts =
+
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -28,15 +29,15 @@ source.include_exts =
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.2.3
+# version = 0.2.3
 
 # (str) Application versioning (method 2)
-# version.regex = __version__ = ['"](.*)['"]
-# version.filename = %(source.dir)s/main.py
+version.regex = self.version = ['"](.*)['"]
+version.filename = %(source.dir)s/zero/src/Config.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,plyer,android,kivy
+requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,plyer,android,kivy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -46,10 +47,10 @@ requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,pl
 #garden_requirements =
 
 # (str) Presplash of the application
-presplash.filename = %(source.dir)s/zn_presplash.png
+presplash.filename = %(source.dir)s/icon.png
 
 # (str) Icon of the application
-icon.filename = %(source.dir)s/zn_icon128.png
+icon.filename = %(source.dir)s/icon.png
 
 # (str) Supported orientation (one of landscape, portrait or all)
 orientation = portrait
@@ -69,7 +70,7 @@ services = zn:serviceloader.py
 #
 
 # (bool) Indicate if the application should be fullscreen or not
-fullscreen = 1
+fullscreen = 0
 
 # (list) Permissions
 android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE
@@ -81,10 +82,10 @@ android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE
 #android.minapi = 9
 
 # (int) Android SDK version to use
-#android.sdk = 20
+android.sdk = 24
 
 # (str) Android NDK version to use
-#android.ndk = 9c
+# android.ndk = 12b
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 android.private_storage = True
@@ -102,7 +103,7 @@ android.private_storage = True
 #android.p4a_dir =
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
-#p4a.local_recipes = 
+#p4a.local_recipes =
 
 # (list) python-for-android whitelist
 android.p4a_whitelist = sqlite3
@@ -113,7 +114,7 @@ android.p4a_whitelist = sqlite3
 # android.skip_update = False
 
 # (str) Bootstrap to use for android builds (android_new only)
-android.bootstrap = sdl2
+# android.bootstrap = sdl2
 
 # (str) Android entry point, default is ok for Kivy-based app
 #android.entrypoint = org.renpy.android.PythonActivity
