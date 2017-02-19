@@ -29,11 +29,11 @@ source.include_exts =
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-# version = 0.2.3
+version = 0.5.2.1
 
 # (str) Application versioning (method 2)
-version.regex = self.version = ['"](.*)['"]
-version.filename = %(source.dir)s/zero/src/Config.py
+# version.regex = self.version = ['"](.*)['"]
+# version.filename = %(source.dir)s/zero/src/Config.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
@@ -56,7 +56,7 @@ icon.filename = %(source.dir)s/icon.png
 orientation = portrait
 
 # (list) List of service to declare
-services = zn:serviceloader.py
+services = zn:service.py
 
 #
 # OSX Specific
