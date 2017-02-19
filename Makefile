@@ -6,6 +6,9 @@ ci: #verbose exceeds log limit of 4mb! -.-
 	buildozer android_new debug
 test:
 	buildozer -v android_new deploy logcat
+docker-test:
+	adb install -r bin/$(shell dir bin)
+	adb logcat | grep "[A-Z] python\|linker\|art"
 env:
 	sudo dpkg --add-architecture i386
 	sudo apt-get update
@@ -21,7 +24,7 @@ env:
 docker-build:
 	docker build -t kivy .
 docker:
-	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
+	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
 docker-ci:
 	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
 vagrant:

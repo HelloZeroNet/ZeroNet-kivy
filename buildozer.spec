@@ -37,7 +37,7 @@ version.filename = %(source.dir)s/zero/src/Config.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,plyer,android,kivy
+requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,git+https://github.com/kivy/plyer,android,kivy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -82,10 +82,10 @@ android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE
 #android.minapi = 9
 
 # (int) Android SDK version to use
-android.sdk = 24
+android.sdk = 20
 
 # (str) Android NDK version to use
-# android.ndk = 12b
+# android.ndk = 9c
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 android.private_storage = True
