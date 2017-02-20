@@ -45,6 +45,9 @@ class Service(SystemService):
     def getEnvJsonPath(self):
         return getDir("env.json")
 
+    def getPidfilePath(self):
+        return getDir("zeronet.pid")
+
     def runService(self):
         env = os.environ
         env['env.json'] = getDir("env.json")

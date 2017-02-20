@@ -1,15 +1,16 @@
 #:kivy 1.8.0
+#:import _ translate.translate
 
-#TODO: Make the gui look light the site list in HelloZeroNet
-#INFO: Colors from hex to kivy-rgb: #1E2429 -> rgb(30, 36, 41) -> rgb(0.30, 0.36, 0.41) - if you don't do the last step, colors will just be white
+#TODO: Make the gui look like the site list in HelloZeroNet
+#INFO: Colors from hex to kivy-rgb: #1E2429 -> rgb(30, 36, 41) -> rgb(0.30, 0.36, 0.41) - if you don"t do the last step, colors will just be white
 
 <Label>:
-    font_size: '15dp'
+    font_size: "15dp"
     font_name: "DroidSansFallback"
     markup: True
     font_align: "center"
 BoxLayout:
-    orientation: 'vertical'
+    orientation: "vertical"
 
     #FIXME: Gradient linear-gradient(352deg, #322641, #2A333C) as background
     #FIXME: Colors look different, color handling seems weird in kivy...
@@ -22,7 +23,7 @@ BoxLayout:
             size: self.size
 
     BoxLayout:
-        orientation: 'horizontal'
+        orientation: "horizontal"
         canvas.before:
             Color:
                 rgb: (0.30, 0.36, 0.41)
@@ -35,7 +36,7 @@ BoxLayout:
         Label:
             id: Hello
             text: "ZeroNet"
-            font_size: '40dp'
+            font_size: "40dp"
             font_name: "TextMeOne"
         Label:
             id: Menu
@@ -47,40 +48,48 @@ BoxLayout:
         padding: 0
         Label:
             id: Welcome
-            text: 'Welcome to ZeroNet!'
+            text: _("Welcome to ZeroNet!")
         Label:
             id: Welcome2
-            text: 'Below you see sites which are available in ZeroNet'
+            text: _("Below you see sites which are available in ZeroNet")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: ZeroHello
+            text: "[ref=http://127.0.0.1:43110/][b]ZeroHello[/b][/ref]"
+            on_ref_press:
+                import webbrowser
+                webbrowser.open("http://127.0.0.1:43110/")
+
+        Label:
+            id: ZeroHelloDesc
+            text: _("The ZeroNet Homepage")
 
     Label:
-        id: ZeroHello
-        text: ' [ref=http://127.0.0.1:43110/][b]ZeroHello[/b] Home page\n（ZeroHello首页）[/ref]'
-        on_ref_press:
-            import webbrowser
-            webbrowser.open('http://127.0.0.1:43110/')
-    Label:
         id: ZeroMe
-        text: '[ref=http://127.0.0.1:43110/Me.ZeroNetwork.bit][b]ZeroMe[/b]\nA P2P Social Network[/ref]'
+        text: "[ref=http://127.0.0.1:43110/Me.ZeroNetwork.bit][b]ZeroMe[/b]\nA P2P Social Network[/ref]"
         on_ref_press:
             import webbrowser
-            webbrowser.open('http://127.0.0.1:43110/Me.ZeroNetwork.bit')
+            webbrowser.open("http://127.0.0.1:43110/Me.ZeroNetwork.bit")
     Label:
         id: NewGFWTalk
-        text: ' [ref=http://127.0.0.1:43110/NewGFWTalk.bit]P2P Chinese forum [b]New GFW Talk[/b]\n      （P2P中文论坛）[/ref]'
+        text: " [ref=http://127.0.0.1:43110/NewGFWTalk.bit]P2P Chinese forum [b]New GFW Talk[/b]\n      （P2P中文论坛）[/ref]"
         on_ref_press:
             import webbrowser
-            webbrowser.open('http://127.0.0.1:43110/NewGFWTalk.bit')
+            webbrowser.open("http://127.0.0.1:43110/NewGFWTalk.bit")
     Label:
         id: Note_en
-        font_size: '10sp'
-        text: '[ref=http://127.0.0.1:43110/Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/]                                  APK Ver. APK_ver\nTo close ZeroNet background service nicely,\n please click ZeroHello\'s top-left ┇ button,\n choose Shut down ZeroNet, thanks!\nMore info & discussions please click here! (En version)[/ref]'
+        font_size: "10sp"
+        text: "[ref=http://127.0.0.1:43110/Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/]                                  APK Ver. APK_ver\nTo close ZeroNet background service nicely,\n please click ZeroHello\"s top-left ┇ button,\n choose Shut down ZeroNet, thanks!\nMore info & discussions please click here! (En version)[/ref]"
         on_ref_press:
             import webbrowser
-            webbrowser.open('http://127.0.0.1:43110/Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/')
+            webbrowser.open("http://127.0.0.1:43110/Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/")
     Label:
         id: Note_zh
-        font_size: '10sp'
-        text: '[ref=http://127.0.0.1:43110/NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/]                               APK 版本号 APK_ver\n（想要妥善地关闭ZeroNet后台服务，\n请在浏览器中点击ZeroHello首页左上方的 ┇ 按钮,\n 选择关闭ZeroNet，谢谢！\n更多信息和相关讨论点这里（中文版））[/ref]'
+        font_size: "10sp"
+        text: "[ref=http://127.0.0.1:43110/NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/]                               APK 版本号 APK_ver\n（想要妥善地关闭ZeroNet后台服务，\n请在浏览器中点击ZeroHello首页左上方的 ┇ 按钮,\n 选择关闭ZeroNet，谢谢！\n更多信息和相关讨论点这里（中文版））[/ref]"
         on_ref_press:
             import webbrowser
-            webbrowser.open('http://127.0.0.1:43110/NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/')
+            webbrowser.open("http://127.0.0.1:43110/NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/")

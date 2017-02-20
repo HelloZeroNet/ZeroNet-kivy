@@ -58,13 +58,19 @@ class SystemService():
 
     def setEnv(self):
         print "Setting Env"
-        env = dict({'ZERONET_DIR': self.getPath(
-            "zero"), 'PLATFORM': str(self.platform)})
+        env = dict(
+            {'srcdir': self.getPath("zero"),
+             'platform': str(self.platform),
+             'pidfile': self.getPidfilePath()}
+        )
         with open(self.getEnvJsonPath(), "w") as f:
             json.dump(env, f)
 
     def getEnvJsonPath(self):
         return "env.json"
+
+    def getPidfilePath(self):
+        return "zeronet.pid"
 
     def run(self):
         update(self.zeroDir(), self.getPath(

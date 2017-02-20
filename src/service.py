@@ -9,13 +9,17 @@ if 'env.json' in os.environ:
         env = json.load(f)
 else:
     with open('env.json', 'r') as f:
-        print "env %s" % str(f)
         env = json.load(f)
 
-ZERONET_DIR = env['ZERONET_DIR']  # Read ZERONET_DIR from file
-print ZERONET_DIR
-sys.path.insert(1,  ZERONET_DIR)
+print "env %s" % env
+
+sys.path.insert(1,  env['srcdir'])
+print "srcdir: %s" % env['srcdir']
 print "sys.path: %s" % sys.path
+
+with open(env['pidfile'], "w") as f:
+    f.write(str(os.getpid()))
+    f.close()
 
 if True:  # so beautification does not move this to the top
     import zeronet
