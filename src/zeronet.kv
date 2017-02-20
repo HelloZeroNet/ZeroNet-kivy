@@ -1,6 +1,7 @@
 #:kivy 1.8.0
 
 #TODO: Make the gui look light the site list in HelloZeroNet
+#INFO: Colors from hex to kivy-rgb: #1E2429 -> rgb(30, 36, 41) -> rgb(0.30, 0.36, 0.41) - if you don't do the last step, colors will just be white
 
 <Label>:
     font_size: '15dp'
@@ -10,9 +11,24 @@
 BoxLayout:
     orientation: 'vertical'
 
+    #FIXME: Gradient linear-gradient(352deg, #322641, #2A333C) as background
+    #FIXME: Colors look different, color handling seems weird in kivy...
+
+    canvas.before:
+        Color:
+            rgb: 0.43, 0.51, 0.60
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
     BoxLayout:
         orientation: 'horizontal'
-        background_color:"#1E2429"
+        canvas.before:
+            Color:
+                rgb: (0.30, 0.36, 0.41)
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
         Image:
             source: "icon.png"
