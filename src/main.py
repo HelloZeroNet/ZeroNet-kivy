@@ -1,6 +1,7 @@
+from kivy import utils
 from kivy.app import App
 from kivy.lang import Builder
-from kivy import utils
+
 
 class ZeronetApp(App):
 
@@ -13,17 +14,17 @@ class ZeronetApp(App):
 
         print "Running on platform %s" % utils.platform
 
-        platform=utils.platform
-        platform_name=platform
+        platform = utils.platform
+        platform_name = platform
 
-        if platform=="android":
+        if platform == "android":
             import platform_android as platform
-        elif platform=="linux":
+        elif platform == "linux":
             import platform_linux as platform
         else:
             raise Exception("Unsupported platform: %s" % platform)
 
-        '''Start the service''' #TODO: check if it crashed/stopped
+        '''Start the service'''  # TODO: check if it crashed/stopped
         platform.Service().run()
 
 if __name__ == '__main__':

@@ -29,3 +29,9 @@ docker-ci:
 	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
 vagrant:
 	vagrant up
+watch: #runs on desktop
+	nodemon -e kv,py -x /usr/bin/python src/main.py
+clean:
+	rm -fv src/*.pyc
+distclean: clean
+	buildozer distclean

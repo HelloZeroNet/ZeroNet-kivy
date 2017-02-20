@@ -1,27 +1,36 @@
-#Android Specific Code
-from platform_service import SystemService
+# Android Specific Code
+import os
+import sys
+import time
 from os import path
 
-from plyer.platforms.android import activity, SDK_INT # plyer in pip is old and has bugs, so need to download source code manually from plyer repo to replace all the plyer source code folder downloaded by buildozer
-
-import sys, os
+import M2Crypto
 from jnius import autoclass
+from M2Crypto import EVP, RSA
+from platform_service import SystemService
+# plyer in pip is old and has bugs, so need to download source code
+# manually from plyer repo to replace all the plyer source code folder
+# downloaded by buildozer
+from plyer.platforms.android import SDK_INT, activity
 
 mActivity = autoclass('org.kivy.android.PythonActivity').mActivity
 
-import M2Crypto
-from M2Crypto import RSA, EVP
-import time
+
 
 def getDir(append=""):
     if len(append):
-        return path.join(mActivity.getExternalFilesDir(None).getPath(),append)
+        return path.join(mActivity.getExternalFilesDir(None).getPath(), append)
     else:
         return mActivity.getExternalFilesDir(None).getPath()
+
+
 def realpath():
     return os.path.dirname(os.path.realpath(__file__))
 
-# Generate a SSL certificate using module M2Crypto,  an existing one will be overwritten .
+# Generate a SSL certificate using module M2Crypto,  an existing one will
+# be overwritten .
+
+
 def generate_self_signed_cert_m2(cert_dir):
     if not os.path.exists(cert_dir):
         os.makedirs(cert_dir)
@@ -35,14 +44,14 @@ def generate_self_signed_cert_m2(cert_dir):
 
     # create a key pair
     key = RSA.gen_key(2048, 65537)
-    key.save_key (key_path, None)
-    pkey = EVP.PKey() # Converting the RSA key into a PKey() which is stored in a certificate
+    key.save_key(key_path, None)
+    pkey = EVP.PKey()  # Converting the RSA key into a PKey() which is stored in a certificate
     pkey.assign_rsa(key)
 
     # create a self-signed cert, the config is copied from src/lib/opensslVerify/openssl.cnf. not sure whether making it random is good or not.
     # time for certificate to stay valid
     cur_time = M2Crypto.ASN1.ASN1_UTCTIME()
-    cur_time.set_time(int(time.time()) - 60*60*24)
+    cur_time.set_time(int(time.time()) - 60 * 60 * 24)
     expire_time = M2Crypto.ASN1.ASN1_UTCTIME()
     expire_time.set_time(int(time.time()) + 60 * 60 * 24 * 365)
     # creating a certificate
@@ -64,16 +73,24 @@ def generate_self_signed_cert_m2(cert_dir):
     cert.save_pem(cert_path)
     return cert_path, key_path
 
+
 class Service(SystemService):
+
     def zeroDir(self):
         return os.path.join(os.environ['ANDROID_APP_PATH'],  'zero')
-    def getPath(self,append=""):
+
+    def getPath(self, append=""):
         return getDir(append)
+
     def runService(self):
         service_fullname = activity.getPackageName() + '.ServiceZn'
         service = autoclass(service_fullname)
-        argument=""
-        generate_self_signed_cert_m2(os.path.join(self.getPath("zero"),  'data')) # Generate a SSL certificate to 'data' folder,  existing pem files will be overwritten . TODO: read the `data_dir` in zeronet.conf
-        service.start(mActivity, argument) # Start service ( system will run service.py)
-        self.service=service
-        self.running=True
+        argument = ""
+        # Generate a SSL certificate to 'data' folder,  existing pem files will
+        # be overwritten . TODO: read the `data_dir` in zeronet.conf
+        generate_self_signed_cert_m2(
+            os.path.join(self.getPath("zero"),  'data'))
+        # Start service ( system will run service.py)
+        service.start(mActivity, argument)
+        self.service = service
+        self.running = True
