@@ -3,6 +3,22 @@ import json
 import logging
 import os
 import re
+import locale
+
+def getSystemLang(index=0):
+    ls=locale.getdefaultlocale()
+    if len(locale.getdefaultlocale()) < index:
+        return "en" #fallback
+    l=ls[index]
+    if l is None:
+        return "en" #No locales
+    print ls
+    print "LOCALE: %s" % l
+    match=re.search("^([a-z]{2})_[A-Z]+.*",str(l))
+    if match:
+        return match.group(1)
+    else:
+        return getSystemLang(index+1)
 
 
 class Translate(dict):
@@ -11,7 +27,7 @@ class Translate(dict):
         if not lang_dir:
             lang_dir = "src/translate/languages/"
         if not lang:
-            lang = "en" #FIXME: Detect language
+            lang=getSystemLang()
         self.lang = lang
         self.lang_dir = lang_dir
         self.setLanguage(lang)
@@ -19,7 +35,7 @@ class Translate(dict):
     def setLanguage(self, lang):
         self.lang = lang
         self.lang_file = self.lang_dir + "%s.json" % lang
-        self.load()
+        return self.load()
 
     def __repr__(self):
         print "repr__"
@@ -30,11 +46,13 @@ class Translate(dict):
             data = json.load(open(self.lang_file))
             print "Loaded translate file: %s (%s entries)" % (self.lang_file, len(data))
             dict.__init__(self, data)
+            return True
         else:
             data = {}
             dict.__init__(self, data)
             self.clear()
             print "Translate file not exists: %s" % self.lang_file
+            return False
 
     def format(self, s, kwargs, nested=False):
         kwargs["_"] = self
