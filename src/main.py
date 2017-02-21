@@ -1,6 +1,8 @@
 from kivy.app import App
 from kivy.lang import Builder
 
+from os_platform import Service,platform
+
 
 class ZeronetApp(App):
 
@@ -9,11 +11,7 @@ class ZeronetApp(App):
     def build(self):
         print "Starting..."
 
-        from kivy import utils
-
-        print "Running on platform %s" % utils.platform
-
-        from os_platform import Service
+        print "Running on platform %s" % platform
 
         '''Start the service'''  # TODO: check if it crashed/stopped
         Service().run()

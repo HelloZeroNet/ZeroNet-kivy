@@ -2,6 +2,7 @@
 import os
 import sys
 import time
+import re
 from os import path
 
 import M2Crypto
@@ -15,7 +16,14 @@ from plyer.platforms.android import SDK_INT, activity
 
 mActivity = autoclass('org.kivy.android.PythonActivity').mActivity
 
-
+def getSystemLang():
+    l=mActivity.getResources().getConfiguration().locale.toString()
+    print "LOCALE: %s" % l
+    match = re.search("^([a-z]{2})_[A-Z]+.*", l)
+    if match:
+        return match.group(1)
+    else:
+        return "en"
 
 def getDir(append=""):
     if len(append):

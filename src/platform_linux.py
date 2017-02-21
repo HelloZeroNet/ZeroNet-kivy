@@ -4,8 +4,25 @@ import sys
 import threading
 from os import path
 from subprocess import PIPE, Popen
-
+import locale
+import re
 from platform_service import SystemService
+
+
+def getSystemLang(index=0):
+    ls = locale.getdefaultlocale()
+    if len(locale.getdefaultlocale()) < index:
+        return "en"  # fallback
+    l = ls[index]
+    if l is None:
+        return "en"  # No locales
+    print ls
+    print "LOCALE: %s" % l
+    match = re.search("^([a-z]{2})_[A-Z]+.*", str(l))
+    if match:
+        return match.group(1)
+    else:
+        return getSystemLang(index + 1)
 
 
 def getDir(append=""):
