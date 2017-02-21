@@ -116,4 +116,3 @@ class Translate(dict):
         return data.encode("utf8")
 
 translate = Translate()
-_ = translate.translateString

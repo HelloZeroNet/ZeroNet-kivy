@@ -30,7 +30,7 @@ docker-ci:
 vagrant:
 	vagrant up
 watch: #runs on desktop
-	nodemon -e kv,py -x /usr/bin/python src/main.py
+	nodemon -e kv,py,json -x /usr/bin/python src/main.py
 clean:
 	rm -fv src/*.pyc
 distclean: clean
