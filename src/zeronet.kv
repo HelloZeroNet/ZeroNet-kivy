@@ -6,7 +6,7 @@
 
 <Label>:
     font_size: "15dp"
-    font_name: "Roboto" #FIXME: Chinese characters look broken it that font
+    font_name: _("Roboto") #Different languages require different fonts
     markup: True
     font_align: "center"
 BoxLayout:
@@ -167,22 +167,9 @@ BoxLayout:
             background_color:hex("#AFAFAF")
             on_press:
                 self.background_color=hex("#6F6F6F")
-                app.url_click("Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/")
+                app.url_click(_("Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/"))
             on_release:
                 self.background_color=hex("#AFAFAF")
-            id: Note_en
-            text: "To close ZeroNet background service nicely,\n please click ZeroHello\"s top-left ┇ button,\n choose Shut down ZeroNet, thanks!\nMore info & discussions please click here! (En version)[/ref]"
-            font_size: "10sp"
-
-        Button:
-            background_normal:""
-            background_down:""
-            background_color:hex("#AFAFAF")
-            on_press:
-                self.background_color=hex("#6F6F6F")
-                app.url_click("NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/")
-            on_release:
-                self.background_color=hex("#AFAFAF")
-            id: Note_zh
-            text: "想要妥善地关闭ZeroNet后台服务，\n请在浏览器中点击ZeroHello首页左上方的 ┇ 按钮,\n 选择关闭ZeroNet，谢谢！\n更多信息和相关讨论点这里（中文版））[/ref]"
+            id: Note
+            text: _("string.feedback")
             font_size: "10sp"

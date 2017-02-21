@@ -25,7 +25,6 @@ class Translate(dict):
         return self.load()
 
     def __repr__(self):
-        print "repr__"
         return "<translate %s>" % self.lang
 
     def load(self):
