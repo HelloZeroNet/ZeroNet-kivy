@@ -1,8 +1,17 @@
 sudo: true
 dist: trusty
 install:
-  - mkdir .buildozer
-  - chmod 777 .buildozer
+- mkdir .buildozer
+- chmod 777 .buildozer
 script:
-  - HOME=$PWD make docker-build
-  - bash .travis/wait.sh & HOME=$PWD make docker-ci
+- HOME=$PWD make docker-build
+- bash .travis/wait.sh & HOME=$PWD make docker-ci
+- mkdir dist && mv -v bin/$(dir bin) dist/latest.apk
+deploy:
+  provider: releases
+  file: dist/latest.apk
+  skip_cleanup: true
+  on:
+    tags: true
+  api_key:
+    secure: L70p+rexplyUb/+Y/UR33/Cax4L1kTt8Yoq0iLyOaLHH1ElIlBVlulk+hb5+oFa28dFVBM+VA4TW3+mwuu4/P6RSCr3sG2KQufK4jtGwEy7pfMQwyooJCpqD7bZa9kMhcMHFCTAzNJOCMHtUd3AcOhIqI3I+pQTqMEFs5h64IcuLBMjEcHmWOIoQ9zpqbNKVdFdn3whgfg00UU6MQFEj1RkgY+qxQEqaOhgziECyLKAWC0sRb6mbvFy93+myb+US2mgUDO6HTlW4dDoOV/+fOw93iXu+RK85Lc+hC/W4sycJ5wZujorGQZY/NTGjW7V6RKHlASDuctGNTw1FPoa0M5x5KIrmDgEK8vozr2d/3KX4hbpJxfalLWv6Mz7jkx8aN+dz464L3qdDgWO41gLj88SVzEOgR6+QFopcPih4LlG1/02uy9EPRBd5pFbeJV1JboztysmJYqEbs1JfTH821iuxkHmwo/e8odHRexQSfIR04Ct6L+015VlNnKMqiJjyQQkh2mKHpZbEoZdqCIfPLozNW7jvauNUd+WGh/aCViQO1VgRJLdfUYYCa0mzMQZiosT/dUfDdgTx6aqFypJDVuhCS9e9gMifOFMY97JMr56WCHLmfQJpPYPTPCYHsF/a0DAN2ukJRIIXmDvS0kz8RxeX5E8XbwgKsxxuyC+94Qw=
