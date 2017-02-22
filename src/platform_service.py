@@ -6,6 +6,9 @@ import traceback
 
 from kivy.utils import platform
 
+import os_platform
+from zeronet_config import parseConfig, saveConfigValue
+
 
 def mkdirp(directory):
     if not os.path.exists(directory):
@@ -49,16 +52,30 @@ def update(src, dst, backup):
         except:
             traceback.print_exc()
         print "zero copied to external zero"
-        for import_dir in ["data", "log"]:
-            if os.path.exists(os.path.join(backup, import_dir)):
-                try:
-                    shutil.move(os.path.join(backup, import_dir),
-                                os.path.join(dst,  import_dir))  # import data
-                except:
-                    traceback.print_exc()
-                print "%s imported" % import_dir
+        if os.path.exists(backup):
+            for import_dir in ["data", "log", "zeronet.conf"]:
+                if os.path.exists(os.path.join(backup, import_dir)):
+                    try:
+                        shutil.move(os.path.join(backup, import_dir),
+                                    os.path.join(dst,  import_dir))  # import data
+                    except:
+                        traceback.print_exc()
+                    print "%s imported" % import_dir
     except:
         traceback.print_exc()
+
+
+def setConfig(conf):
+    # no need to check if config exists, will return {} if it doesn't
+    c = parseConfig(conf)
+
+    def defaultValue(key, value):
+        if key not in c:
+            print "Applying default value %s for field %s" % (value, key)
+            saveConfigValue(conf, key, value)
+    defaultValue("language", os_platform.getSystemLang())
+    # defaultValue("keep_ssl_cert","1") FIXME: ERROR:root:Unhandled exception:
+    # 'Config' object has no attribute 'fileserver_ip'
 
 
 class SystemService():
@@ -88,6 +105,7 @@ class SystemService():
     def run(self):
         update(self.zeroDir(), self.getPath(
             "zero"), self.getPath("zero_backup"))
+        setConfig(os.path.join(self.getPath("zero"), "zeronet.conf"))
         self.setEnv()
         print "Running ZeroNet"
         self.runService()

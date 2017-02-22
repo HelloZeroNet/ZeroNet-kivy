@@ -1,11 +1,12 @@
 # Linux Specific Code
+import locale
 import os
+import re
 import sys
 import threading
 from os import path
 from subprocess import PIPE, Popen
-import locale
-import re
+
 from platform_service import SystemService
 
 
@@ -16,7 +17,6 @@ def getSystemLang(index=0):
     l = ls[index]
     if l is None:
         return "en"  # No locales
-    print ls
     print "LOCALE: %s" % l
     match = re.search("^([a-z]{2})_[A-Z]+.*", str(l))
     if match:
@@ -67,7 +67,7 @@ class Service(SystemService):
 
     def runService(self):
         env = os.environ
-        env['env.json'] = getDir("env.json")
+        env['ENV_JSON'] = getDir("env.json")
         self.process = Popen([os.path.join(realpath(), "service.py")], env=env)
         self.running = True
         self.thread = pipeThread(1, "ZeroNet", 1, self.process)
