@@ -26,7 +26,7 @@ def needUpdate(src, dst, backup):
     conf = os.path.join(dst, "src", "Config.py")
     confsrc = os.path.join(src, "src", "Config.py")
     if os.path.exists(conf):
-        return parseRev(conf) != parseRev(confsrc)
+        return parseRev(conf) < parseRev(confsrc)
     return True  # FIXME: add logic
 
 
