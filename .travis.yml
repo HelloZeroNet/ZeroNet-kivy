@@ -6,7 +6,6 @@ install:
 script:
 - HOME=$PWD make docker-build
 - bash .travis/wait.sh & HOME=$PWD make docker-ci
-- mkdir dist && mv -v bin/$(dir bin) dist/latest.apk
 before_deploy:
   - mv -v bin/* .
   - export RELEASE_PKG_FILE=$(dir *.apk)
