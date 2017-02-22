@@ -6,14 +6,10 @@ install:
 script:
 - HOME=$PWD make docker-build
 - bash .travis/wait.sh & HOME=$PWD make docker-ci
-before_deploy:
-  - mv -v bin/* .
-  - export RELEASE_PKG_FILE=$(dir *.apk)
-  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
 deploy:
   provider: releases
   file_glob: true
-  file: "${RELEASE_PKG_FILE}"
+  file: bin/*
   skip_cleanup: true
   on:
     tags: true

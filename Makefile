@@ -1,6 +1,7 @@
 UID=$(shell id -u)
 apk:
 	buildozer -v android_new debug
+	buildozer -v android_new release
 ci: #verbose exceeds log limit of 4mb! -.-
 	sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
 	buildozer android_new debug
@@ -30,7 +31,7 @@ docker-ci:
 vagrant:
 	vagrant up
 watch: #runs on desktop
-	nodemon -e kv,py,json -x /usr/bin/python src/main.py
+	nodemon -e kv,py,json -x /usr/bin/python2 src/main.py
 clean:
 	rm -fv src/*.pyc
 distclean: clean
