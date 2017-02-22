@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import shutil
 import traceback
 
@@ -11,9 +12,21 @@ def mkdirp(directory):
         os.makedirs(directory)
 
 
+def parseRev(f):
+    file = open(f, "r")
+    for line in file:
+        match = re.search("^ *self\.rev = ([0-9]*)", line)
+        if match:
+            return int(match.group(1))
+
+
 def needUpdate(src, dst, backup):
     if not os.path.exists(dst):
         return True
+    conf = os.path.join(dst, "src", "Config.py")
+    confsrc = os.path.join(src, "src", "Config.py")
+    if os.path.exists(conf):
+        return parseRev(conf) != parseRev(confsrc)
     return True  # FIXME: add logic
 
 
