@@ -74,8 +74,10 @@ def setConfig(conf):
             print "Applying default value %s for field %s" % (value, key)
             saveConfigValue(conf, key, value)
     defaultValue("language", os_platform.getSystemLang())
-    # defaultValue("keep_ssl_cert","1") FIXME: ERROR:root:Unhandled exception:
-    # 'Config' object has no attribute 'fileserver_ip'
+    defaultValue("keep_ssl_cert","")
+    #These values are for debugging
+    #defaultValue("fileserver_port","15444")
+    #defaultValue("ui_port","8898")
 
 
 class SystemService():
