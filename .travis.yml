@@ -1,4 +1,3 @@
-sudo: true
 dist: trusty
 install:
 - mkdir .buildozer
