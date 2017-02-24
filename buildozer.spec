@@ -56,7 +56,7 @@ icon.filename = %(source.dir)s/icon.png
 orientation = portrait
 
 # (list) List of service to declare
-services = zn:service.py
+services = zn:service.py,watch1:watchdog_1.py,watch2:watchdog_2.py
 
 #
 # OSX Specific
@@ -82,7 +82,7 @@ android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE
 #android.minapi = 9
 
 # (int) Android SDK version to use
-android.sdk = 20
+android.sdk = 24
 
 # (str) Android NDK version to use
 # android.ndk = 9c

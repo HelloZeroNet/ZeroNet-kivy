@@ -59,3 +59,10 @@ def saveConfigValue(config_file, key, value):
             lines.insert(global_line_i + 1, new_line)
 
     open(config_file, "w").write("\n".join(lines) + "\n")
+
+
+def getConfigValue(f, key, default=None):
+    c = parseConfig(f)
+    if key not in c:
+        return default
+    return c[key]

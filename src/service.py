@@ -1,15 +1,15 @@
 #!/usr/bin/env python
 
-import json
 import os
 import sys
 
-if 'ENV_JSON' in os.environ:
-    with open(os.environ['ENV_JSON'], 'r') as f:
-        env = json.load(f)
-else:
-    with open('env.json', 'r') as f:
-        env = json.load(f)
+from env_json import loadEnv
+
+env = loadEnv()
+
+if env["platform"] == "android":
+    from jnius import autoclass
+    Service = autoclass('org.kivy.android.PythonService').mService
 
 print "env %s" % env
 

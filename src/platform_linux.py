@@ -36,6 +36,10 @@ def realpath():
     return os.path.dirname(os.path.realpath(__file__))
 
 
+def getDebug():
+    return os.path.exists(os.path.join(realpath(), "..", ".git"))
+
+
 class pipeThread (threading.Thread):
 
     def __init__(self, threadID, name, counter, args):
@@ -62,13 +66,28 @@ class Service(SystemService):
     def getEnvJsonPath(self):
         return getDir("env.json")
 
-    def getPidfilePath(self):
-        return getDir("zeronet.pid")
+    def getPidfilePath(self, what="zeronet"):
+        return getDir(what + ".pid")
+
+    def startWatchdog(self, id):
+        # if not os.fork():
+        self.runGeneric("watchdog_" + str(id) + ".py",
+                        "Watchdog_" + str(id), "watchdog" + str(id))
+        # sys.exit(0)
 
     def runService(self):
+        return self.runGeneric("service.py", "ZeroNet", "zeronet")
+
+    def runGeneric(self, what, name, pidid):
+        if self.isRunning(pidid):
+            print "Skip starting %s, already running as %s" % (name, self.getPid(pidid))
+            return False
+        self.count += 1
         env = os.environ
         env['ENV_JSON'] = getDir("env.json")
-        self.process = Popen([os.path.join(realpath(), "service.py")], env=env)
-        self.running = True
-        self.thread = pipeThread(1, "ZeroNet", 1, self.process)
-        self.thread.start()
+        process = Popen([os.path.join(realpath(), what)], env=env)
+        self.setPid(pidid, process.pid)
+        running = True
+        thread = pipeThread(self.count, name, self.count, process)
+        thread.start()
+        return thread, process

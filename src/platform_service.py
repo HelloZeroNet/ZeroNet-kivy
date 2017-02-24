@@ -1,3 +1,4 @@
+import errno
 import json
 import os
 import re
@@ -74,10 +75,42 @@ def setConfig(conf):
             print "Applying default value %s for field %s" % (value, key)
             saveConfigValue(conf, key, value)
     defaultValue("language", os_platform.getSystemLang())
-    defaultValue("keep_ssl_cert","")
-    #These values are for debugging
-    #defaultValue("fileserver_port","15444")
-    #defaultValue("ui_port","8898")
+    defaultValue("keep_ssl_cert", "")
+    if os_platform.getDebug():
+        defaultValue("debug", "")
+        # Optional, if you are already running a zeronet instance
+        # defaultValue("fileserver_port","15444")
+        # defaultValue("ui_port","8898")
+
+
+def check_pid(pid):
+    """Check whether pid exists in the current process table.
+    UNIX only.
+    """
+    if pid < 0:
+        return False
+    if pid == 0:
+        # According to "man 2 kill" PID 0 refers to every process
+        # in the process group of the calling process.
+        # On certain systems 0 is a valid PID but we have no way
+        # to know that in a portable fashion.
+        #raise ValueError('invalid PID 0')
+        return False
+    try:
+        os.kill(pid, 0)
+    except OSError as err:
+        if err.errno == errno.ESRCH:
+            # ESRCH == No such process
+            return False
+        elif err.errno == errno.EPERM:
+            # EPERM clearly means there's a process to deny access to
+            return True
+        else:
+            # According to "man 2 kill" possible error values are
+            # (EINVAL, EPERM, ESRCH)
+            raise
+    else:
+        return True
 
 
 class SystemService():
@@ -85,6 +118,8 @@ class SystemService():
     def __init__(self):
         self.dir = self.getPath()
         self.platform = platform
+        self.count = 0
+        self.config = os.path.join(self.getPath("zero"), "zeronet.conf")
         print "ZeroNet_Dir=%s" % self.dir
         mkdirp(self.dir)
 
@@ -101,13 +136,36 @@ class SystemService():
     def getEnvJsonPath(self):
         return "env.json"
 
-    def getPidfilePath(self):
-        return "zeronet.pid"
+    def getPidfilePath(self, what="zeronet"):
+        return what + ".pid"
+
+    def getPid(self, what="zeronet"):
+        pidfile = self.getPidfilePath(what)
+        if not os.path.exists(pidfile):
+            return 0  # if the pidfile got deleted by accident, zeronet has it's own lock file
+        with open(pidfile, 'r') as f:
+            try:
+                pid = int(f.readline())
+            except ValueError:
+                return 0
+        return pid
+
+    def setPid(self, what="zeronet", pid=0):
+        open(self.getPidfilePath(what), "w").write(str(pid))
+
+    def isRunning(self, what="zeronet"):
+        return check_pid(self.getPid(what))
 
     def run(self):
         update(self.zeroDir(), self.getPath(
             "zero"), self.getPath("zero_backup"))
-        setConfig(os.path.join(self.getPath("zero"), "zeronet.conf"))
+        setConfig(self.config)
         self.setEnv()
+        # print "Running Watchdogs"
+        # self.startWatchdog(1)
+        # self.startWatchdog(2)
+        self.runZero()
+
+    def runZero(self):
         print "Running ZeroNet"
         self.runService()

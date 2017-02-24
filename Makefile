@@ -9,7 +9,7 @@ test:
 	buildozer -v android_new deploy logcat
 docker-test:
 	adb install -r bin/$(shell dir bin)
-	adb logcat | grep "[A-Z] python\|linker\|art"
+	adb logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
 env:
 	sudo dpkg --add-architecture i386
 	sudo apt-get update
@@ -19,7 +19,7 @@ env:
 	sudo apt-get install -y build-essential swig ccache git libncurses5:i386 libstdc++6:i386 libgtk2.0-0:i386 libpangox-1.0-0:i386 libpangoxft-1.0-0:i386 libidn11:i386 python2.7 python2.7-dev openjdk-8-jdk unzip zlib1g-dev zlib1g:i386
 	sudo apt-get install -y automake aidl libbz2-dev
 	sudo apt-get install -y python-kivy
-	sudo pip install --upgrade cython==0.21
+	sudo pip install --upgrade cython
 	sudo pip install --upgrade colorama appdirs sh jinja2 six
 	sudo pip install --upgrade buildozer kivy
 docker-build:

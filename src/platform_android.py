@@ -1,10 +1,11 @@
 # Android Specific Code
 import os
+import re
 import sys
 import time
-import re
 from os import path
 
+import android
 import M2Crypto
 from jnius import autoclass
 from M2Crypto import EVP, RSA
@@ -16,14 +17,16 @@ from plyer.platforms.android import SDK_INT, activity
 
 mActivity = autoclass('org.kivy.android.PythonActivity').mActivity
 
+
 def getSystemLang():
-    l=mActivity.getResources().getConfiguration().locale.toString()
+    l = mActivity.getResources().getConfiguration().locale.toString()
     print "LOCALE: %s" % l
     match = re.search("^([a-z]{2})_[A-Z]+.*", l)
     if match:
         return match.group(1)
     else:
         return "en"
+
 
 def getDir(append=""):
     if len(append):
@@ -34,6 +37,10 @@ def getDir(append=""):
 
 def realpath():
     return os.path.dirname(os.path.realpath(__file__))
+
+
+def getDebug():
+    return autoclass(activity.getPackageName() + ".BuildConfig").DEBUG
 
 # Generate a SSL certificate using module M2Crypto,  an existing one will
 # be overwritten .
@@ -90,15 +97,22 @@ class Service(SystemService):
     def getPath(self, append=""):
         return getDir(append)
 
-    def runService(self):
-        service_fullname = activity.getPackageName() + '.ServiceZn'
+    def runGeneric(self, what, pidid):
+        if self.isRunning(pidid):
+            print "Skip starting %s, already running as %s" % (what, self.getPid(pidid))
+            return False
+        service_fullname = activity.getPackageName() + '.Service' + what
         service = autoclass(service_fullname)
         argument = ""
+        service.start(mActivity, argument)
+
+    def startWatchdog(self, id):
+        return self.runGeneric("Watch%s" % id, "watchdog%s" % id)
+
+    def runService(self):
         # Generate a SSL certificate to 'data' folder,  existing pem files will
         # be overwritten . TODO: read the `data_dir` in zeronet.conf
         generate_self_signed_cert_m2(
             os.path.join(self.getPath("zero"),  'data'))
         # Start service ( system will run service.py)
-        service.start(mActivity, argument)
-        self.service = service
-        self.running = True
+        return self.runGeneric("Zn", "zeronet")
