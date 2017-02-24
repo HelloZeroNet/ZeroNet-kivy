@@ -8,8 +8,14 @@ from env_json import loadEnv
 env = loadEnv()
 
 if env["platform"] == "android":
+    import android
     from jnius import autoclass
     Service = autoclass('org.kivy.android.PythonService').mService
+    notifi=autoclass("android.app.Notification$Builder")(Service)
+    notifi.setContentTitle("ZeroNet")
+    notifi.setContentText("ZeroNet is running")
+    notification=notifi.getNotification()
+    Service.startForeground(233,notification)
 
 print "env %s" % env
 
