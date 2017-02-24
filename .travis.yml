@@ -1,7 +1,4 @@
 dist: trusty
-install:
-- mkdir $HOME/.buildozer
-- chmod 777 $HOME/.buildozer
 script:
 - make docker-build
 - bash .travis/wait.sh & make docker-ci
