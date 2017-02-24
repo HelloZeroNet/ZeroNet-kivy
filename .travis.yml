@@ -1,10 +1,10 @@
 dist: trusty
 install:
-- mkdir .buildozer
-- chmod 777 .buildozer
+- mkdir $HOME/.buildozer
+- chmod 777 $HOME/.buildozer
 script:
-- HOME=$PWD make docker-build
-- bash .travis/wait.sh & HOME=$PWD make docker-ci
+- make docker-build
+- bash .travis/wait.sh & make docker-ci
 deploy:
   provider: releases
   file_glob: true
@@ -14,3 +14,7 @@ deploy:
     tags: true
   api_key:
     secure: yEee9dn/tJ7j53v6fCM4kvdXZQ/j+r4bSo8Ssv1y8nM7YzwHBbmV4wTbrLAPtHpeuMV+CzS5jsyKENzSPJkmonVhuvS7AFtv/JY4QLo40hpB4VfXvb6VLsy5foTw9nubVCUS4kJ4Z3h1ebvZUZdfh9gKatQwsZ3d53zWFNKygsPr7aqtGcmOP3hJRdfUJRFZ4CycUkV0yj/Q4eRZ3Nqqp0XO6K38GL4gzF4gVGqr356mz4+5q9PMj5MJ023OvI+Bi6rcjn3jzCS1S7DQffQHiL+qxRGEG4+1In8iFsl3IbMpjdHFk0gdOcZ0wmtBHJbIftZwfDkF2UtRnqWNGYxzWyIrEF7+sYTle+fgMmtnLvDaY9wuR28TjGwHnx7VEvpRQqoNage2W7d79jrsO8+PJebOxrEhwqrNrJp6X6vN5A4rX0aGb0V47C03a7mG+4erIqDzV4a226RWU2WqCwxdjQ86TiqzFcOM6Zj14f0mkDS5HU0TRu7WovvMmOBFsZ3p7CKFx56WmbD/9/8wxfZGIOkKSNYuatlnP1OlXLR3ZAVAhGDWcuajZuVMoc4HYFvLn2G6Wuj7N5KKuW9NBdyIsHXH5JDgY0AIsEpdqI72nEvROr4vZMEXeVQ7Fx1M4Uhilfj1kHzEz2f6KBzNY04zZ/ikHftLGcgEs4clWT/YgYc=
+cache:
+  directories:
+  - "$HOME/.android/"
+  - "$HOME/.buildozer/"
