@@ -1,26 +1,31 @@
 # ZeroNet-kivy
+[![Build Status](https://travis-ci.org/mkg20001/ZeroNet-kivy.svg?branch=master)](https://travis-ci.org/mkg20001/ZeroNet-kivy)
 [简体中文](./README-zh-cn.md)
 
 The GUI control panel and APP packaging for ZeroNet using Kivy framework
-[Kivy](https://kivy.org) is an open-source cross-platform GUI framework written in Python. It works on not only Android but also iOS, even desktop (Win, Linux, Mac ). 
+[Kivy](https://kivy.org) is an open-source cross-platform GUI framework written in Python. It works on not only Android but also iOS, even desktop (Win, Linux, Mac ).
 
 Currently the code of this repo only works on Android, anyone interested in iOS dev are welcome.
 Currently this project is in Alpha phase, lack of GUI functionalities and creative design, containing many code for testing purpose. Please feel free to contribute!
 
 
-### Screen Shot:
+## Screenshots:
 
-App:
+### App:
 
-![](http://i.imgur.com/1VHvdeP.jpg)
+#### Splash Screen
+![Startup](/screenshots/startup.png)
+#### UI
+![UI](/screenshots/ui.png)
 
-Home Page:
+### ZeroNet:
 
-![](http://i.imgur.com/mx1nLY0.png)
-
-ZeroMe:
-
-![](http://i.imgur.com/nog7YPG.png)
+#### Loading Screen
+![Loading](/screenshots/loading.png)
+#### ZeroHello
+![ZeroHello](/screenshots/zerohello.png)
+#### ZeroMe
+![ZeroMe](http://i.imgur.com/nog7YPG.png)
 
 
 ## Goals:
@@ -48,7 +53,7 @@ The packaging is not hard, thanks to Kivy's Buildozer which automates many thing
 
 ## Download APK
 
-[Download from here](../../raw/master/dist/ZeroNet-0.2.3-debug.apk)
+[Download from here](https://github.com/mkg20001/ZeroNet-kivy/releases)
 
 ## How to use the APK
 
@@ -71,4 +76,4 @@ The packaging is not hard, thanks to Kivy's Buildozer which automates many thing
 * `inject.py_`  # Where there are major code and design. The inject.py file will be put in External Storage, so that users can inject their own code and design without root. Please inject yours! Hack it! ( the `py_` is not a typo, it is to avoid converting to pyo file while packaging )
 * main.py # Entry point. It does some preparing work and execute inject.py
 * README.md
-* serviceloader.py # Entry point of Android Service specified in buildozer.spec, to load zero/zeronet.py as service 
+* serviceloader.py # Entry point of Android Service specified in buildozer.spec, to load zero/zeronet.py as service
