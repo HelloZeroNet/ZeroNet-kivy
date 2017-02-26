@@ -1,0 +1,15 @@
+{
+  "Roboto":"DroidSansFallback",
+  "string.feedback":"想要妥善地關閉ZeroNet背景服務，\n請在瀏覽器中點擊ZeroHello首頁左上方的 ┇ 按鈕,\n 選擇關閉ZeroNet，謝謝！\n更多信息和相關討論點這裡（中文版））[/ref]",
+  "Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/":"NewGFWTalk.bit/?Topic:59_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/",
+
+  "Welcome to ZeroNet!":"歡迎使用 ZeroNet",
+  "Below you see sites which are available in ZeroNet":"下面你看到的是 ZeroNet 的可用網站",
+  "ZeroNet Homepage":"ZeroNet 首頁",
+  "Simple Messaging Board":"简单的佈告欄",
+  "Reddit-Like, Decentralized Forum":"類似於 Reddit 的，分散式的論壇",
+  "Microblogging Platform":"輕量化網誌平台",
+  "End-to-End Encrypted Mailing":"端對端加密郵件",
+  "Peer-to-Peer Social Network":"對等社交網路",
+  "Reddit-Like, Decentralized Forum for China":"來自於中國的，類似於 Reddit 的，分散式的論壇"
+}
