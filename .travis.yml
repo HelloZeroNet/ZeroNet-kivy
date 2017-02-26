@@ -1,6 +1,7 @@
 dist: trusty
 script:
 - make docker-build
+- make prebuild
 - bash .travis/wait.sh & make docker-ci
 deploy:
   provider: releases

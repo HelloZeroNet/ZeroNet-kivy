@@ -23,15 +23,23 @@ def parseRev(f):
         if match:
             return int(match.group(1))
 
+def findFile(files):
+    for f in files:
+        if os.path.exists(f):
+            return f
+    return None
+
 
 def needUpdate(src, dst, backup):
     if not os.path.exists(dst):
         return True
-    conf = os.path.join(dst, "src", "Config.py")
-    confsrc = os.path.join(src, "src", "Config.py")
-    if os.path.exists(conf):
+    conf = findFile([os.path.join(dst, "src", "Config.py"),os.path.join(dst, "src", "Config.py_")])
+    confsrc = findFile([os.path.join(src, "src", "Config.py"),os.path.join(src, "src", "Config.py_")])
+    if conf is not None and confsrc is not None:
         return parseRev(conf) < parseRev(confsrc)
-    return True  # FIXME: add logic
+    else:
+        print "Some files are missing, need to update"
+        return True
 
 
 def update(src, dst, backup):

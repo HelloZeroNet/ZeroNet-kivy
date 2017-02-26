@@ -6,3 +6,4 @@ bin
 *.pyc
 _OLD
 screenshots.orig
+.pre

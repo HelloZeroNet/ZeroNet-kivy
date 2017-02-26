@@ -1,4 +1,5 @@
 UID=$(shell id -u)
+ADB_FLAG=-d
 apk:
 	buildozer -v android_new debug
 ci: #verbose exceeds log limit of 4mb! -.-
@@ -8,8 +9,8 @@ ci: #verbose exceeds log limit of 4mb! -.-
 test:
 	buildozer -v android_new deploy logcat
 docker-test:
-	adb install -r bin/$(shell dir bin)
-	adb logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
+	adb $(ADB_FLAG) install -r bin/$(shell dir bin)
+	adb $(ADB_FLAG) logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
 env:
 	sudo dpkg --add-architecture i386
 	sudo apt-get update
@@ -22,12 +23,18 @@ env:
 	sudo pip install --upgrade cython
 	sudo pip install --upgrade colorama appdirs sh jinja2 six
 	sudo pip install --upgrade buildozer kivy
+update:
+	git submodule foreach git pull origin master
+prebuild:
+	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
+	cd src/zero && cp src/Config.py src/Config.py_
+	touch .pre
 docker-build:
 	docker build -t kivy .
 docker:
-	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
+	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
 docker-ci:
-	docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
+	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
 vagrant:
 	vagrant up
 watch: #runs on desktop
