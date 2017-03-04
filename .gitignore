@@ -1,0 +1,9 @@
+.buildozer
+dist
+bin
+.vagrant
+*.log
+*.pyc
+_OLD
+screenshots.orig
+.pre

@@ -1,0 +1,175 @@
+#:kivy 1.8.0
+#:import _ translate.translate
+#:import hex kivy.utils.get_color_from_hex
+#:import hex2 light_colors.hex
+#:import browser webbrowser.open
+
+<Label>:
+    font_size: "15dp"
+    font_name: _("Roboto") #Different languages require different fonts
+    markup: True
+    font_align: "center"
+BoxLayout:
+    orientation: "vertical"
+
+    #FIXME: Gradient linear-gradient(352deg, #322641, #2A333C) as background
+
+    canvas.before:
+        Color:
+            rgb: hex2("#1E2429")
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: "horizontal"
+        canvas.before:
+            Color:
+                rgb: hex2("#2B333C")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Image:
+            source: "icon.png"
+        Label:
+            id: Hello
+            text: "ZeroNet"
+            font_size: "40dp"
+            font_name: "TextMeOne"
+        Label:
+            id: Menu
+            text: "┇"
+            font_size:"20dp"
+            font_name: "DroidSansFallback"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 0
+        Label:
+            id: Welcome
+            text: _("Welcome to ZeroNet!")
+        Label:
+            id: Welcome2
+            text: _("Below you see sites which are available in ZeroNet")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: ZeroHello
+            text: "[ref=1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D][b]ZeroHello[/b][/ref]"
+            on_ref_press: app.url_click("1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D")
+
+        Label:
+            id: ZeroHelloDesc
+            text: _("ZeroNet Homepage")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: ZeroBoard
+            text: "[ref=Board.ZeroNetwork.bit][b]ZeroBoard[/b][/ref]"
+            on_ref_press: app.url_click("Board.ZeroNetwork.bit")
+
+        Label:
+            id: ZeroBoardDesc
+            text: _("Simple Messaging Board")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: ZeroTalk
+            text: "[ref=Talk.ZeroNetwork.bit][b]ZeroTalk[/b][/ref]"
+            on_ref_press: app.url_click("Talk.ZeroNetwork.bit")
+
+        Label:
+            id: ZeroTalkDesc
+            text: _("Reddit-Like, Decentralized Forum")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: ZeroBlog
+            text: "[ref=Blog.ZeroNetwork.bit][b]ZeroBlog[/b][/ref]"
+            on_ref_press: app.url_click("Blog.ZeroNetwork.bit")
+
+        Label:
+            id: ZeroBlogDesc
+            text: _("Microblogging Platform")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: ZeroMail
+            text: "[ref=Mail.ZeroNetwork.bit][b]ZeroMail[/b][/ref]"
+            on_ref_press: app.url_click("Mail.ZeroNetwork.bit")
+
+        Label:
+            id: ZeroMailDesc
+            text: _("End-to-End Encrypted Mailing")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: ZeroMe
+            text: "[ref=Me.ZeroNetwork.bit][b]ZeroMe[/b][/ref]"
+            on_ref_press: app.url_click("Me.ZeroNetwork.bit")
+
+        Label:
+            id: ZeroMeDesc
+            text: _("Peer-to-Peer Social Network")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
+            id: GFWTalk
+            text: "[ref=NewGFWTalk.bit][b]New GFW Talk[/b][/ref]"
+            on_ref_press: app.url_click("NewGFWTalk.bit")
+
+        Label:
+            id: GFWTalk
+            text: _("Reddit-Like, Decentralized Forum for China")
+
+    BoxLayout:
+        orientation:"horizontal"
+        canvas.before:
+            Color:
+                rgb: hex("#AFAFAF")
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        Button:
+            background_normal:""
+            background_down:""
+            background_color:hex("#AFAFAF")
+            on_press:
+                self.background_color=hex("#6F6F6F")
+                browser("https://github.com/mkg20001/ZeroNet-kivy/issues")
+            on_release:
+                self.background_color=hex("#AFAFAF")
+            id: BugReport
+            text: _("[b]Report a Bug[/b]")
+#            Image:
+#                height: dp(50)
+#                source: "bug.png"
+
+        Button:
+            background_normal:""
+            background_down:""
+            background_color:hex("#AFAFAF")
+            on_press:
+                self.background_color=hex("#6F6F6F")
+                app.url_click(_("Talk.ZeroNetwork.bit/?Topic:13_13Z7XxTa7JuFat3KzzMWu3onwM6biLuurJ/"))
+            on_release:
+                self.background_color=hex("#AFAFAF")
+            id: Note
+            text: _("string.feedback")
+            font_size: "10sp"

@@ -1,0 +1,3 @@
+[submodule "src/zero"]
+	path = src/zero
+	url = https://github.com/HelloZeroNet/ZeroNet
