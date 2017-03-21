@@ -37,7 +37,8 @@ version = 0.5.2.1
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,git+https://github.com/kivy/plyer,android,kivy
+# Temporary using plyer fork to fix encoding issue
+requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,git+https://github.com/cidermole/plyer,android,kivy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -76,16 +77,16 @@ fullscreen = 0
 android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE
 
 # (int) Android API to use
-#android.api = 19
+android.api = 24
 
 # (int) Minimum API required
-#android.minapi = 9
+android.minapi = 9
 
 # (int) Android SDK version to use
-android.sdk = 24
+android.sdk = 25
 
 # (str) Android NDK version to use
-# android.ndk = 9c
+android.ndk = 14
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 android.private_storage = True

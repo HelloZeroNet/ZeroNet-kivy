@@ -4,6 +4,7 @@ apk:
 	buildozer -v android_new debug
 ci: #verbose exceeds log limit of 4mb! -.-
 	sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
+	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
 	buildozer android_new debug
 	buildozer android_new release
 test:
@@ -29,6 +30,8 @@ prebuild:
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
 	cd src/zero && cp src/Config.py src/Config.py_
 	touch .pre
+deps: #downloads sdk and ndk because buildozer is unable to download the newer ones
+	python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
 docker-build:
 	docker build -t kivy .
 docker:
