@@ -53,7 +53,9 @@ The packaging is not hard, thanks to Kivy's Buildozer which automates many thing
 
 ## Download APK
 
-[Download from here](https://github.com/mkg20001/ZeroNet-kivy/releases)
+[ » Download from here](https://github.com/HelloZeroNet/ZeroNet-kivy/releases)
+
+[ » Older releases](https://github.com/mkg20001/ZeroNet-kivy/releases)
 
 ## How to use the APK
 
