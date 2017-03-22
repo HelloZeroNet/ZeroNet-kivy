@@ -4,7 +4,7 @@ apk:
 	buildozer -v android_new debug
 ci: #verbose exceeds log limit of 4mb! -.-
 	sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
-	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
+	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	buildozer android_new debug
 	buildozer android_new release
 test:
