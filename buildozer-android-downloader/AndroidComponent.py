@@ -70,7 +70,8 @@ def dlwithprogress(url,dest,what):
                         count_progress=count_progress+1
                         if not count_progress%10:
                             sys.stdout.write("["+str(count_progress)+"%]")
-                        sys.stdout.write('.')
+                        else:
+                            sys.stdout.write('.')
                         sys.stdout.flush()
                 f.write(chunk)
                 f.flush()
