@@ -1,7 +1,10 @@
+from __future__ import print_function
+
 from os import path
 from uuid import uuid4 as uuid
 
-import os
+
+import os, sys
 import zipfile
 import requests
 from clint.textui import progress
@@ -24,12 +27,12 @@ def getunzipped(theurl, thedir, what):
 #    name, hdrs = urllib.urlretrieve(theurl, name)
     dlwithprogress(theurl,name, what)
   except IOError, e:
-    print "Can't retrieve %r to %r: %s" % (theurl, thedir, e)
+    print("Can't retrieve %r to %r: %s" % (theurl, thedir, e))
     return
   try:
     z = zipfile.ZipFile(name)
   except zipfile.error, e:
-    print "Bad zipfile (%r): %s" % (theurl, e)
+    print("Bad zipfile (%r): %s" % (theurl, e))
     return
   for n in z.namelist():
     if n.endswith("/"):
@@ -43,22 +46,35 @@ def getunzipped(theurl, thedir, what):
         data = z.read(n)
         f.write(data)
         f.close()
-        #print n
+        #print(n)
     except IOError, e:
-        print "An error occured @ file %s: %s" % (n,e)
+        print("An error occured @ file %s: %s" % (n,e))
   z.close()
   os.unlink(name)
-  print "Successfully downloaded %s" % what
+  print("Successfully downloaded %s" % what)
 
 def dlwithprogress(url,dest,what):
     with open(dest, "wb") as f:
-        print "Downloading %s from %s" % (what,url)
+        print("Downloading %s from %s" % (what,url))
         r = requests.get(url, stream=True)
         total_length = int(r.headers.get('content-length'))
         if "DISABLE_PROGRESS" in os.environ:
-            if chunk:
+            count_progress=-1
+            count_max=(total_length/1024) + 1
+            count_current=0
+            for chunk in r.iter_content(chunk_size=1024):
+                count_current=count_current+1
+                count_new=count_current//(count_max//100)
+                if count_progress < count_new:
+                    for i in range(count_progress,count_new):
+                        count_progress=count_progress+1
+                        if not count_progress%10:
+                            sys.stdout.write("["+str(count_progress)+"%]")
+                        sys.stdout.write('.')
+                        sys.stdout.flush()
                 f.write(chunk)
                 f.flush()
+            print("")
         else:
             for chunk in progress.bar(r.iter_content(chunk_size=1024), expected_size=(total_length/1024) + 1):
                 if chunk:
