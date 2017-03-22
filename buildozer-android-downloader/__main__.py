@@ -28,7 +28,15 @@ conf_path=path.realpath(sys.argv[1])
 conf=config(conf_path)
 objs=dict({"sdk":SDK,"ndk":NDK})
 for thing in ("sdk","ndk"):
-    n=objs[thing](conf.parseNum("android."+thing),b_dir)
+    ver=conf.parseNum("android."+thing)
+    if not ver:
+        print "ERROR: Invalid version %s for %s" % (str(ver),thing)
+        continue
+    if thing == "ndk" and ver < 11:
+        print "WARN: Too old version %s for %s" % (str(ver),thing)
+        print "Buildozer will automatically install that version as this is only a fix for the newer ones (NDK r11+)"
+        continue
+    n=objs[thing](ver,b_dir)
     if n.exists():
         if recursive_if_empty(n.destDir):
             n.download()
