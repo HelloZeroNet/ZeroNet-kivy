@@ -23,7 +23,7 @@ env:
 	sudo apt-get install -y python-kivy
 	sudo pip install --upgrade cython
 	sudo pip install --upgrade colorama appdirs sh jinja2 six clint requests
-	sudo pip install --upgrade buildozer kivy
+	sudo pip install --upgrade git+https://github.com/kivy/buildozer kivy
 update:
 	git submodule foreach git pull origin master
 prebuild:

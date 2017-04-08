@@ -37,8 +37,7 @@ version = 0.5.2.1
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-# Temporary using plyer fork to fix encoding issue
-requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,git+https://github.com/cidermole/plyer,android,kivy
+requirements = sqlite3,openssl,m2crypto,gevent,msgpack-python,pil,hostpython2,git+https://github.com/kivy/plyer,android,kivy
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
