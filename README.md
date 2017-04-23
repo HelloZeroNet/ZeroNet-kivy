@@ -31,17 +31,17 @@ Currently this project is in Alpha phase, lack of GUI functionalities and creati
 ## Goals:
 
 * [ ] User-friendly installing
- - [ ] Reduce the package size by removing unused files
- - [ ] Release on F-Droid, Google Play, Apple App Store and other platform's official APP market or package repository.
+   - [ ] Reduce the package size by removing unused files
+   - [ ] Release on F-Droid, Google Play, Apple App Store and other platform's official APP market or package repository.
 * [ ] Easy to use
- - [ ] Start or stop ZeroNet service by just a single tap
- - [ ] Running without killed by system
-   + [x] On Android, make ZeroNet service Foreground to keep it less likely to be killed. If still killed, create 1~2 daemon services to restart ZeroNet service when it killed
- - [ ] Reduce battery and data quota ( bandwidth ) as well as data storage consuming on mobile devices. Auto-adjust the behavior of ZeroNet in different scenarios, e.g. using Wifi or cellular data, being charged or low battery. Of course, users can adjust it by themselves via GUI
- - [ ] Keep users.json and other sensitive data in internal private directory of the APP, out of other APPs' reach
- - [ ] Import master seed or users.json via GUI to let users import their ZeroNet IDs
- - [ ] GUI config of ZeroNet instead of editing zeronet.conf manually
- - [ ] Offer a thin client of ZeroNet for users' choice, working like a thin client of Bitcoin, via which users can use ZeroNet without joining as a full client, waiting large data sync, consuming much battery and data quota ( bandwidth ) as well as data storage. The thin client, holding the user's private keys, receives data from random proxies ( gateways )  and posts signed data to random proxies ( gateways ) without user's private keys leaving the user's own device
+   - [ ] Start or stop ZeroNet service by just a single tap
+   - [ ] Running without killed by system
+       + [x] On Android, make ZeroNet service Foreground to keep it less likely to be killed. If still killed, create 1~2 daemon services to restart ZeroNet service when it killed
+   - [ ] Reduce battery and data quota ( bandwidth ) as well as data storage consuming on mobile devices. Auto-adjust the behavior of ZeroNet in different scenarios, e.g. using Wifi or cellular data, being charged or low battery. Of course, users can adjust it by themselves via GUI
+   - [ ] Keep users.json and other sensitive data in internal private directory of the APP, out of other APPs' reach
+   - [ ] Import master seed or users.json via GUI to let users import their ZeroNet IDs
+   - [ ] GUI config of ZeroNet instead of editing zeronet.conf manually
+   - [ ] Offer a thin client of ZeroNet for users' choice, working like a thin client of Bitcoin, via which users can use ZeroNet without joining as a full client, waiting large data sync, consuming much battery and data quota ( bandwidth ) as well as data storage. The thin client, holding the user's private keys, receives data from random proxies ( gateways )  and posts signed data to random proxies ( gateways ) without user's private keys leaving the user's own device
 
 Actually, some above goals are out of the scope of this project, which means we also need to contribute to ZeroNet project itself to achieve said goals.
 
@@ -74,5 +74,5 @@ The packaging is not hard, thanks to Kivy's Buildozer which automates many thing
     - service.py - Service file
     - platform_*.py - Platform Specific code
     * zero -  ZeroNet Source Code (if content is missing run `git submodule init --recursive`)
-     - zeronet.py - ZeroNet Launcher
+      - zeronet.py - ZeroNet Launcher
   * buildozer.spec - Buildozer config file with package name, title, version, android.permissions, services, etc.
