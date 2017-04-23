@@ -29,7 +29,7 @@ source.include_exts =
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.5.2.1
+version = 0.5.4.1
 
 # (str) Application versioning (method 2)
 # version.regex = self.version = ['"](.*)['"]
@@ -165,6 +165,9 @@ android.p4a_whitelist = sqlite3
 
 # (bool) Copy library instead of making a libpymodules.so
 #android.copy_libs = 1
+
+# (str) The Android arch to build for, choices: armeabi-v7a (works), arm64-v8a (untested), x86 (buggy/not compiling), x86_64 (unsupported)
+android.arch = armeabi-v7a
 
 #
 # iOS specific
