@@ -5,7 +5,7 @@ apk:
 ci: #verbose exceeds log limit of 4mb! -.-
 	sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
 	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
-	echo "y\n" | $HOME/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
+	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
 	buildozer android_new debug
 	buildozer android_new release
 test:
@@ -33,7 +33,7 @@ prebuild:
 	touch .pre
 pre:
 	python2 buildozer-android-downloader/ /home/data/buildozer.spec
-	echo "y\n" | $HOME/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
+	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
 deps: #downloads sdk and ndk because buildozer is unable to download the newer ones
 	python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
 docker-build:
