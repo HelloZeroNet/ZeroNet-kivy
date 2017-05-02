@@ -26,6 +26,8 @@ RUN rm -f /etc/apt/apt.conf.d/01autoremove-kernels \
  \
  && echo 'Apt::AutoRemove::SuggestsImportant "false";' > /etc/apt/apt.conf.d/docker-autoremove-suggests
 
+RUN apt-get update
+
 #Locale
 RUN apt-get install language-pack-en -y
 ENV LANG en_US.UTF-8
@@ -34,7 +36,6 @@ ENV LC_ALL en_US.UTF-8
 RUN locale-gen en_US.UTF-8
 RUN update-locale
 
-RUN apt-get update
 RUN apt-get install -y make sudo
 RUN chmod 777 /home
 #This is required, fixes: KeyError: 'getpwuid(): uid not found: 1000'
