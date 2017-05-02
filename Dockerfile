@@ -28,10 +28,10 @@ RUN rm -f /etc/apt/apt.conf.d/01autoremove-kernels \
 
 RUN apt-get update
 RUN apt-get install -y make sudo
-ADD Makefile .
 RUN chmod 777 /home
 #This is required, fixes: KeyError: 'getpwuid(): uid not found: 1000'
 RUN chmod 777 /etc/passwd
+ADD Makefile .
 RUN make -C . env
 RUN rm -rfv /home
 RUN mkdir /home
