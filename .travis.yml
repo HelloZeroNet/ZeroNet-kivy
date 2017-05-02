@@ -2,7 +2,7 @@ dist: trusty
 script:
 - make docker-build
 - make prebuild
-- bash .travis/wait.sh & make docker-ci
+- make docker-ci
 deploy:
   provider: releases
   file_glob: true
