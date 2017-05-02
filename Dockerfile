@@ -26,6 +26,10 @@ RUN rm -f /etc/apt/apt.conf.d/01autoremove-kernels \
  \
  && echo 'Apt::AutoRemove::SuggestsImportant "false";' > /etc/apt/apt.conf.d/docker-autoremove-suggests
 
+#locale fix
+ENV LC_ALL en_US.UTF-8
+RUN locale-gen en_US.UTF-8
+
 RUN apt-get update
 RUN apt-get install -y make sudo
 RUN chmod 777 /home
