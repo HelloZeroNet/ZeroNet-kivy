@@ -3,12 +3,12 @@ ADB_FLAG=-d
 apk:
 	buildozer -v android_new debug
 ci: #verbose exceeds log limit of 4mb! -.-
-	sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
+	#sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
 	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
-	buildozer android_new debug
-	buildozer android_new release
+	CI_MODE=1 buildozer android_new debug
+	CI_MODE=1 buildozer android_new release
 test:
 	buildozer -v android_new deploy logcat
 docker-test:
@@ -23,9 +23,9 @@ env:
 	sudo apt-get install -y build-essential swig ccache git libtool pkg-config libncurses5:i386 libstdc++6:i386 libgtk2.0-0:i386 libpangox-1.0-0:i386 libpangoxft-1.0-0:i386 libidn11:i386 python2.7 python2.7-dev openjdk-8-jdk unzip zlib1g-dev zlib1g:i386
 	sudo apt-get install -y automake aidl libbz2-dev
 	sudo apt-get install -y python-kivy
-	sudo pip install --upgrade cython
-	sudo pip install --upgrade colorama appdirs sh jinja2 six clint requests
-	sudo pip install --upgrade git+https://github.com/kivy/buildozer kivy
+	sudo pip2 install --upgrade cython
+	sudo pip2 install --upgrade colorama appdirs sh jinja2 six clint requests
+	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
 update:
 	git submodule foreach git pull origin master
 prebuild:
@@ -44,6 +44,8 @@ docker:
 	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
 docker-ci:
 	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
+docker-pre:
+	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data pre'
 vagrant:
 	vagrant up
 watch: #runs on desktop
