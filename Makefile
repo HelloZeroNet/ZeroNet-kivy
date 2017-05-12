@@ -8,7 +8,7 @@ ci: #verbose exceeds log limit of 4mb! -.-
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
 	CI_MODE=1 buildozer android_new debug
-	CI_MODE=1 buildozer android_new release
+	#CI_MODE=1 buildozer android_new release
 test:
 	buildozer -v android_new deploy logcat
 docker-test:
