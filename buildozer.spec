@@ -53,10 +53,11 @@ presplash.filename = %(source.dir)s/splash.png
 icon.filename = %(source.dir)s/icon.png
 
 # (str) Supported orientation (one of landscape, portrait or all)
-orientation = portrait
+orientation = all
 
 # (list) List of service to declare
-services = zn:service.py,watch1:watchdog_1.py,watch2:watchdog_2.py
+services = zn:service.py
+#,watch1:watchdog_1.py,watch2:watchdog_2.py
 
 #
 # OSX Specific
