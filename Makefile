@@ -25,7 +25,7 @@ env:
 	sudo apt-get install -y automake aidl libbz2-dev
 	sudo apt-get install -y python-kivy
 	sudo pip2 install --upgrade cython
-	sudo pip2 install --upgrade colorama appdirs sh jinja2 six clint requests
+	sudo pip2 install --upgrade colorama appdirs sh\<1.12.5 jinja2 six clint requests
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
 update:
 	git submodule foreach git pull origin master
