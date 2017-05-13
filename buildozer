@@ -1,0 +1,4 @@
+#!/bin/sh
+#Wrapper for Docker Buildozer
+
+make -sC $(readlink -f $(dirname $(readlink -f "$0"))) docker-exec "ARGS=$@"

@@ -43,6 +43,8 @@ docker-build:
 	docker build -t kivy .
 docker:
 	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
+docker-exec:
+	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && buildozer $(ARGS)'
 docker-ci:
 	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
 docker-pre:
