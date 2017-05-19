@@ -29,7 +29,7 @@ source.include_exts =
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.5.4.1
+version = 0.5.5.1
 
 # (str) Application versioning (method 2)
 # version.regex = self.version = ['"](.*)['"]
