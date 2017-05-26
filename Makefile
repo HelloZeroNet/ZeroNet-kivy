@@ -1,16 +1,16 @@
 UID=$(shell id -u)
 ADB_FLAG=-d
 apk:
-	buildozer -v android_new debug
+	buildozer -v android debug
 ci: #verbose exceeds log limit of 4mb! -.-
 	#sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
 	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
-	CI_MODE=1 buildozer android_new debug
-	#CI_MODE=1 buildozer android_new release
+	CI_MODE=1 buildozer android debug
+	#CI_MODE=1 buildozer android release
 test:
-	buildozer -v android_new deploy logcat
+	buildozer -v android deploy logcat
 docker-test:
 	adb $(ADB_FLAG) install -r bin/$(shell dir bin)
 	adb $(ADB_FLAG) logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
@@ -25,7 +25,7 @@ env:
 	sudo apt-get install -y automake aidl libbz2-dev
 	sudo apt-get install -y python-kivy
 	sudo pip2 install --upgrade cython
-	sudo pip2 install --upgrade colorama appdirs sh\<1.12.5 jinja2 six clint requests
+	sudo pip2 install --upgrade colorama appdirs sh>=1.10,\<1.12.5 jinja2 six clint requests
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
 update:
 	git submodule foreach git pull origin master

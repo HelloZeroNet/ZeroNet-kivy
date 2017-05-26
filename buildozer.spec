@@ -107,7 +107,7 @@ android.private_storage = True
 #p4a.local_recipes =
 
 # (list) python-for-android whitelist
-android.p4a_whitelist = sqlite3
+android.whitelist = sqlite3
 
 # (bool) If True, then skip trying to update the Android sdk
 # This can be useful to avoid excess Internet downloads or save time

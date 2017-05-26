@@ -1,5 +1,2 @@
-.buildozer
-dist
-bin
-.vagrant
-*.log
+*
+!Makefile
