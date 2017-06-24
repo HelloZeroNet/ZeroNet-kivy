@@ -1,9 +1,13 @@
+#Config
+
 UID=$(shell id -u)
 ADB_FLAG=-d
+VER_SUFFIX=1
+
+#Targets
 apk:
 	buildozer -v android debug
-ci: #verbose exceeds log limit of 4mb! -.-
-	#sed "s/log_level = 2/log_level = 1/g" -i buildozer.spec
+ci:
 	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
@@ -29,9 +33,13 @@ env:
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
 update:
 	git submodule foreach git pull origin master
+zeroup: #update zeronet
+	if [ -e .pre ]; then rm -rf src/zero && git submodule update && rm .pre; fi
+	git remote update -p
+	git merge --ff-only
 prebuild:
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
-	cd src/zero && cp src/Config.py src/Config.py_
+	cd src/zero && cp src/Config.py src/Config.py_ && sed -r "s|self\.version = ['\"](.*)['\"]|self.version = \"\1.$(VER_SUFFIX)\"|g" -i src/Config.py
 	touch .pre
 pre:
 	python2 buildozer-android-downloader/ /home/data/buildozer.spec

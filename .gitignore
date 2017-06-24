@@ -7,3 +7,4 @@ bin
 _OLD
 screenshots.orig
 .pre
+*.bak

@@ -29,11 +29,11 @@ source.include_exts =
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.5.5.1
+# version = 0.5.6.1
 
-# (str) Application versioning (method 2)
-# version.regex = self.version = ['"](.*)['"]
-# version.filename = %(source.dir)s/zero/src/Config.py
+# (str) Application versioning (method 2) - now fixed
+version.regex = self\.version = ['"](.*)['"]
+version.filename = %(source.dir)s/zero/src/Config.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
