@@ -7,6 +7,19 @@ VER_SUFFIX=1
 #Targets
 apk:
 	buildozer -v android debug
+release-sign:
+	rm -rf _bin
+	[ -e bin ] && mv bin _bin || mkdir bin
+	rm -rf _bin/release
+	mkdir -p bin _bin
+	zipalign -v -p 4 $(shell find .buildozer/android/platform/build/dists/zeronet -type f -iname "ZeroNet-*-release-unsigned.apk") bin/release.apk
+	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) sign --ks $(HOME)/.android/release --out bin/ZeroNet.apk bin/release.apk
+	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify bin/ZeroNet.apk
+	mv bin _bin/release
+	mv _bin bin
+release:
+	make docker-exec ARGS="android release"
+	make release-sign
 ci:
 	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
@@ -16,7 +29,7 @@ ci:
 test:
 	buildozer -v android deploy logcat
 docker-test:
-	adb $(ADB_FLAG) install -r bin/$(shell dir bin)
+	adb $(ADB_FLAG) install -r bin/$(shell dir -w 1 bin | sort | tail -n 1)
 	adb $(ADB_FLAG) logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
 env:
 	sudo dpkg --add-architecture i386
