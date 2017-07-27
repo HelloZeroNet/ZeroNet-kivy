@@ -45,6 +45,7 @@ env:
 	sudo pip2 install --upgrade colorama appdirs sh>=1.10,\<1.12.5 jinja2 six clint requests
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
 update:
+	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
 	git submodule foreach git pull origin master
 zeroup: #update zeronet
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update && rm .pre; fi

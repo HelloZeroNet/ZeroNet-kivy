@@ -32,7 +32,7 @@ Currently this project is in Alpha phase, lack of GUI functionalities and creati
 
 * [ ] User-friendly installing
    - [ ] Reduce the package size by removing unused files
-   - [ ] Release on F-Droid, Google Play, Apple App Store and other platform's official APP market or package repository.
+   - [x] Release on F-Droid, Google Play, Apple App Store and other platform's official APP market or package repository.
 * [ ] Easy to use
    - [ ] Start or stop ZeroNet service by just a single tap
    - [ ] Running without killed by system
