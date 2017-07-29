@@ -23,7 +23,7 @@ release:
 ci:
 	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
-	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
+	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.4
 	CI_MODE=1 buildozer android debug
 	#CI_MODE=1 buildozer android release
 test:
@@ -44,6 +44,7 @@ env:
 	sudo pip2 install --upgrade cython
 	sudo pip2 install --upgrade colorama appdirs sh>=1.10,\<1.12.5 jinja2 six clint requests
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
+	sudo pip2 install "appdirs" "colorama>=0.3.3" "sh>=1.10,<1.12.5" "jinja2" "six"
 update:
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
 	git submodule foreach git pull origin master
@@ -70,7 +71,7 @@ docker-exec:
 docker-ci:
 	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
 docker-pre:
-	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data pre'
+	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data pre' || (sudo chmod 777 $(HOME)/.buildozer && make docker-pre)
 vagrant:
 	vagrant up
 watch: #runs on desktop
