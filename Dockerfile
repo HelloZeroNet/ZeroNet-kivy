@@ -43,6 +43,7 @@ RUN chmod 777 /home
 RUN chmod 777 /etc/passwd
 
 ADD Makefile .
+ADD tool.sh .
 RUN make -C . env
 
 RUN rm -rfv /home
