@@ -1,8 +1,9 @@
 dist: trusty
 script:
+- 'echo -e "EXEC=docker\nDOCKER_IMAGE=kivy\n" > .env'
 - make docker-build
-- make prebuild
-- make docker-ci
+- make .pre
+- make _ci
 deploy:
   provider: releases
   file_glob: true

@@ -8,3 +8,5 @@ _OLD
 screenshots.orig
 .pre
 *.bak
+.env
+.deps

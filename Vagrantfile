@@ -66,10 +66,10 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
-    whoami
+   whoami
    sudo apt-get update
    sudo apt-get install -y make
-   sudo make -C /vagrant env
-   make -C /vagrant apk
+   echo -e "EXEC=host\n" > /vagrant/.env
+   sudo make -C /vagrant .pre
   SHELL
 end

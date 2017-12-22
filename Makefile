@@ -1,36 +1,45 @@
-#Config
+# Config
 
-UID=$(shell id -u)
-ADB_FLAG=-d
-VER_SUFFIX=1
+# Vars
 
-#Targets
-apk:
-	buildozer -v android debug
-release-sign:
-	rm -rf _bin
-	[ -e bin ] && mv bin _bin || mkdir bin
-	rm -rf _bin/release
-	mkdir -p bin _bin
-	zipalign -v -p 4 $(shell find .buildozer/android/platform/build/dists/zeronet -type f -iname "ZeroNet-*-release-unsigned.apk") bin/release.apk
-	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) sign --ks $(HOME)/.android/release --out bin/ZeroNet.apk bin/release.apk
-	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify bin/ZeroNet.apk
-	mv bin _bin/release
-	mv _bin bin
-release:
-	make docker-exec ARGS="android release"
-	make release-sign
-ci:
+TOOL=bash ./tool.sh
+EXEC=$(TOOL) exec
+EXEC_NAME=$(shell $(TOOL) _getvar EXEC)
+
+# Internal
+
+_ci:
+	$(EXEC) make -C /home/data _ci_exec
+
+_ci_exec:
 	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.4
 	CI_MODE=1 buildozer android debug
 	#CI_MODE=1 buildozer android release
-test:
-	buildozer -v android deploy logcat
-docker-test:
-	adb $(ADB_FLAG) install -r bin/$(shell dir -w 1 bin | sort | tail -n 1)
-	adb $(ADB_FLAG) logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
+
+.env:
+	@echo "No .env file found..."
+	@echo "Running setup..."
+	$(TOOL) setup
+
+.deps:
+	make -C . $(EXEC_NAME)-deps
+
+.pre: .env .deps
+	$(TOOL) prebuild
+
+
+_pre:
+	python2 buildozer-android-downloader/ /home/data/buildozer.spec
+	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
+	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
+_deps: #downloads sdk and ndk because buildozer is unable to download the newer ones
+	python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
+	touch .deps
+
+# Pre-targets
+
 env:
 	sudo dpkg --add-architecture i386
 	sudo apt-get update
@@ -45,6 +54,41 @@ env:
 	sudo pip2 install --upgrade colorama appdirs sh>=1.10,\<1.12.5 jinja2 six clint requests
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
 	sudo pip2 install "appdirs" "colorama>=0.3.3" "sh>=1.10,<1.12.5" "jinja2" "six"
+
+host-deps: env _pre _deps
+
+docker-deps:
+	$(EXEC) make -C /home/data _pre _deps || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && make docker-deps)
+
+# Targets
+
+debug: .pre
+	$(EXEC) buildozer -v android debug
+
+release: .pre
+	$(EXEC) buildozer -v android release
+
+run: .pre
+	adb $(ADB_FLAG) install -r bin/$(shell dir -w 1 bin | sort | tail -n 1)
+	adb $(ADB_FLAG) logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
+
+test: .pre
+	$(EXEC) buildozer -v android deploy logcat
+
+docker-build:
+	docker build -t kivy .
+
+# Old targets
+release-sign:
+	rm -rf _bin
+	[ -e bin ] && mv bin _bin || mkdir bin
+	rm -rf _bin/release
+	mkdir -p bin _bin
+	zipalign -v -p 4 $(shell find .buildozer/android/platform/build/dists/zeronet -type f -iname "ZeroNet-*-release-unsigned.apk") bin/release.apk
+	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) sign --ks $(HOME)/.android/release --out bin/ZeroNet.apk bin/release.apk
+	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify bin/ZeroNet.apk
+	mv bin _bin/release
+	mv _bin bin
 update:
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
 	git submodule foreach git pull origin master
@@ -52,26 +96,6 @@ zeroup: #update zeronet
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update && rm .pre; fi
 	git remote update -p
 	git merge --ff-only origin/master
-prebuild:
-	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
-	cd src/zero && cp src/Config.py src/Config.py_ && sed -r "s|self\.version = ['\"](.*)['\"]|self.version = \"\1.$(VER_SUFFIX)\"|g" -i src/Config.py
-	touch .pre
-pre:
-	python2 buildozer-android-downloader/ /home/data/buildozer.spec
-	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
-	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
-deps: #downloads sdk and ndk because buildozer is unable to download the newer ones
-	python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
-docker-build:
-	docker build -t kivy .
-docker:
-	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data apk'
-docker-exec:
-	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && buildozer $(ARGS)'
-docker-ci:
-	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd && yes | make -C /home/data ci'
-docker-pre:
-	[ -e .pre ] && docker run -u $(UID) --rm --privileged=true -it -v $(PWD):/home/data -v $(HOME)/.buildozer:/home/.buildozer -v $(HOME)/.android:/home/.android kivy sh -c 'echo builder:x:$(UID):27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && make -C /home/data pre' || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && make docker-pre)
 vagrant:
 	vagrant up
 watch: #runs on desktop
