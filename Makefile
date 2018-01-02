@@ -94,8 +94,8 @@ update:
 	git submodule foreach git pull origin master
 zeroup: #update zeronet
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update && rm .pre; fi
-	git remote update -p
-	git merge --ff-only origin/master
+	git -C src/zero remote update -p
+	git -C src/zero merge --ff-only origin/master
 vagrant:
 	vagrant up
 watch: #runs on desktop

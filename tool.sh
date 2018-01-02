@@ -114,8 +114,9 @@ case "$1" in
     _exec "$@"
     ;;
   prebuild)
-    if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
+    if [ -e .pre ]; then rm -rf src/zero && git submodule update && cd ../../; fi
     cd src/zero && cp src/Config.py src/Config.py_ && sed -r "s|self\.version = ['\"](.*)['\"]|self.version = \"\1.$VER_SUFFIX\"|g" -i src/Config.py
+    cd ../../
     touch .pre
     ;;
   docker-build)
