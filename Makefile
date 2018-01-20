@@ -78,6 +78,10 @@ test: .pre
 docker-build:
 	docker build -t kivy .
 
+release-do:
+	cp -v bin/release/ZeroNet.apk $(HOME)/ZeroNet/data/1A9gZwjdcTh3bpdriaWm7Z4LNdUL8GhDu2
+	cp -v bin/release/metadata.json $(HOME)/ZeroNet/data/1A9gZwjdcTh3bpdriaWm7Z4LNdUL8GhDu2
+
 # Old targets
 release-sign:
 	rm -rf _bin
