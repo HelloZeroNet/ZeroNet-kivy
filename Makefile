@@ -89,6 +89,7 @@ release-sign:
 	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify bin/ZeroNet.apk
 	mv bin _bin/release
 	mv _bin bin
+	$(TOOL) metadata
 update:
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
 	git submodule foreach git pull origin master

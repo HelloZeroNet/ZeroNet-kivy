@@ -70,6 +70,10 @@ mkenv() {
   make -C env
 }
 
+getmeta() {
+  cat src/zero/src/Config.py | grep "$1 =" | sed -r "s|(.*) = ||g"
+}
+
 # Main Code
 
 if [ "$1" == "_getvar" ]; then
@@ -118,6 +122,12 @@ case "$1" in
     cd src/zero && cp src/Config.py src/Config.py_ && sed -r "s|self\.version = ['\"](.*)['\"]|self.version = \"\1.$VER_SUFFIX\"|g" -i src/Config.py
     cd ../../
     touch .pre
+    ;;
+  metadata)
+    echo "{\"rev\":$(getmeta self.rev),\"ver\":$(getmeta self.version),\"date\":$(expr $(date +%s) \* 1000)}" > bin/release/metadata.json
+    ;;
+  post-sign)
+    cp -v bin/release/{ZeroNet.apk,metadata.json} $HOME/ZeroNet/data/1A9gZwjdcTh3bpdriaWm7Z4LNdUL8GhDu2
     ;;
   docker-build)
     make docker-build
