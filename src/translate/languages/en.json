@@ -1,3 +1,4 @@
 {
+  "_translators": "IMPORTANT: WHEN ADDING NEW LANGUAGE FILES PLEASE USE ANOTHER LANGUAGE AS TEMPLATE AS THIS ONE ONLY CONTAINS 'string.feedback'!",
   "string.feedback":"To close ZeroNet background service nicely,\n please click ZeroHello\"s top-left [font=DroidSansFallback]┇[/font] button,\n choose Shut down ZeroNet, thanks!\nMore info & discussions please click here! (En version)[/ref]"
 }
