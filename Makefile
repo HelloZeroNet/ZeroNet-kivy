@@ -14,7 +14,9 @@ _ci:
 _ci_exec:
 	DISABLE_PROGRESS=true make _pre
 	CI_MODE=1 buildozer android debug
-	#CI_MODE=1 buildozer android release
+
+_ci_release:
+	CI_MODE=1 buildozer android release
 
 .env:
 	@echo "No .env file found..."
