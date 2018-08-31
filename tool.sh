@@ -18,10 +18,11 @@ NC="$normal" # No Color
 # Executors
 
 exec_docker() {
-  docker run -u "$UID" --rm --privileged=true -it -v "$PWD:/home/data" -v "$HOME/.buildozer:/home/.buildozer" -v "$HOME/.android:/home/.android" "$docker_image" sh -c "echo builder:x:$UID:27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && $*"
+  docker run -u "$UID" --rm --privileged=true -it -e "USE_SDK_WRAPPER=1" -v "$PWD:/home/data" -v "$HOME/.buildozer:/home/.buildozer" -v "$HOME/.android:/home/.android" "$docker_image" sh -c "echo builder:x:$UID:27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && $*"
 }
 
 exec_host() {
+  export USE_SDK_WRAPPER=1
   "$@"
 }
 

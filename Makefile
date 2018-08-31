@@ -12,9 +12,7 @@ _ci:
 	$(EXEC) make -C /home/data _ci_exec
 
 _ci_exec:
-	DISABLE_PROGRESS=true python2 buildozer-android-downloader/ /home/data/buildozer.spec
-	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
-	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.4
+	DISABLE_PROGRESS=true make _pre
 	CI_MODE=1 buildozer android debug
 	#CI_MODE=1 buildozer android release
 
@@ -29,12 +27,13 @@ _ci_exec:
 .pre: .env .deps
 	$(TOOL) prebuild
 
-
 _pre:
 	python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
-	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-25.0.2
-_deps: #downloads sdk and ndk because buildozer is unable to download the newer ones
+	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/bin/*
+	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-28.0.2
+	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t android-19
+_deps: # downloads sdk and ndk because buildozer is unable to download the newer ones
 	python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
 	touch .deps
 
@@ -58,7 +57,7 @@ env:
 host-deps: env _pre _deps
 
 docker-deps:
-	$(EXEC) make -C /home/data _pre _deps || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && make docker-deps)
+	$(EXEC) make -C /home/data _pre _deps || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && mkdir -p $(HOME)/.android/cache && sudo chmod 777 $(HOME)/.android/cache && make docker-deps)
 
 # Targets
 

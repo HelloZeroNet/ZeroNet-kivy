@@ -3,7 +3,7 @@ script:
   - export DISABLE_PROGRESS=1
   - 'echo -e "EXEC=docker\nDOCKER_IMAGE=kivy\nDISABLE_PROGRESS=1" > .env'
   - make docker-build
-  - make .pre
+  - bash ./tool.sh prebuild
   - make _ci
 deploy:
   provider: releases

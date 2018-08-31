@@ -103,6 +103,7 @@ class SDK(AndroidComponent):
     def constructUrl(self):
         #return "http://dl.google.com/android/android-sdk_r"+self.version_str+"-linux.tgz"
         return "https://dl.google.com/android/repository/tools_r"+self.version_str+"-linux.zip"
+        #return "https://dl.google.com/android/repository/sdk-tools-linux-"+self.version_str+".zip"
 
 class NDK(AndroidComponent):
     def constructDir(self,zip=False):
