@@ -1,9 +1,10 @@
 dist: trusty
 script:
-- 'echo -e "EXEC=docker\nDOCKER_IMAGE=kivy\n" > .env'
-- make docker-build
-- make .pre
-- make _ci
+  - export DISABLE_PROGRESS=1
+  - 'echo -e "EXEC=docker\nDOCKER_IMAGE=kivy\nDISABLE_PROGRESS=1" > .env'
+  - make docker-build
+  - make .pre
+  - make _ci
 deploy:
   provider: releases
   file_glob: true
