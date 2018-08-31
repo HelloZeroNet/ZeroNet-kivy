@@ -82,16 +82,14 @@ release-do:
 	cp -v bin/release/metadata.json $(HOME)/ZeroNet/data/1A9gZwjdcTh3bpdriaWm7Z4LNdUL8GhDu2
 
 # Old targets
-release-sign:
-	rm -rf _bin
-	[ -e bin ] && mv bin _bin || mkdir bin
-	rm -rf _bin/release
-	mkdir -p bin _bin
+release-align:
 	zipalign -v -p 4 $(shell find .buildozer/android/platform/build/dists/zeronet -type f -iname "ZeroNet-*-release-unsigned.apk") bin/release.apk
-	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) sign --ks $(HOME)/.android/release --out bin/ZeroNet.apk bin/release.apk
-	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify bin/ZeroNet.apk
-	mv bin _bin/release
-	mv _bin bin
+release-sign:
+	rm -rf release bin/release
+	mkdir release
+	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) sign --ks $(HOME)/.android/release --out release/ZeroNet.apk bin/release.apk
+	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify release/ZeroNet.apk
+	mv release bin/release
 	$(TOOL) metadata
 update:
 	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
