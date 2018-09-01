@@ -35,8 +35,7 @@ _pre:
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/bin/*
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-28.0.2
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t android-19
-_deps: # downloads sdk and ndk because buildozer is unable to download the newer ones
-	python2 buildozer-android-downloader/ $(PWD)/buildozer.spec
+_deps: # did something, will cleanup later
 	touch .deps
 
 # Pre-targets
