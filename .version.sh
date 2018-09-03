@@ -1,5 +1,5 @@
 #!/bin/bash
 
-CUR_VER="0.6.1"
+CUR_VERSION="0.6.3"
 
-VER_SUFFIX=1
+VER_SUFFIX=2

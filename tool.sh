@@ -120,6 +120,8 @@ case "$1" in
     ;;
   prebuild)
     if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
+    V=$(echo $(cat src/zero/src/Config.py | grep self.version | sed -r "s|self\.version = ['\"](.*)['\"]|\1|g" | head -n 1))
+    if [ "$V" != "$CUR_VERSION" ]; then echo ".version.sh \$VER_SUFFIX needs to be reset, major version change: $CUR_VERSION != $V" && exit 2; fi
     cd src/zero && cp src/Config.py src/Config.py_ && sed -r "s|self\.version = ['\"](.*)['\"]|self.version = \"\1.$VER_SUFFIX\"|g" -i src/Config.py
     cd ../../
     touch .pre
