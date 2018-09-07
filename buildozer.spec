@@ -77,16 +77,16 @@ fullscreen = 0
 android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE
 
 # (int) Android API to use
-android.api = 19
+android.api = 26
 
 # (int) Minimum API required
-android.minapi = 9
+android.minapi = 16
 
 # (int) Android SDK version to use
 android.sdk = 25
 
 # (str) Android NDK version to use
-android.ndk = 9c
+android.ndk = 15
 
 # (bool) Use --private data storage (True) or --dir public storage (False)
 android.private_storage = True

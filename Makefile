@@ -13,10 +13,10 @@ _ci:
 
 _ci_exec:
 	DISABLE_PROGRESS=true make _pre
-	CI_MODE=1 buildozer android debug
+	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
 
 _ci_release:
-	CI_MODE=1 buildozer android release
+	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release
 
 .env:
 	@echo "No .env file found..."
@@ -33,8 +33,9 @@ _pre:
 	python2 buildozer-android-downloader/ /home/data/buildozer.spec
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android
 	chmod +x $(HOME)/.buildozer/android/platform/android-sdk-25/tools/bin/*
+	chmod +x -R $(HOME)/.buildozer/android/platform/android-ndk-r15
 	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t build-tools-28.0.2
-	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t android-19
+	echo "y\n" | $(HOME)/.buildozer/android/platform/android-sdk-25/tools/android update sdk -u -a -t android-26
 _deps: # did something, will cleanup later
 	touch .deps
 
@@ -63,10 +64,10 @@ docker-deps:
 # Targets
 
 debug: .pre
-	$(EXEC) buildozer -v android debug
+	$(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android debug
 
 release: .pre
-	$(EXEC) buildozer -v android release
+	$(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android release
 
 run: .pre
 	adb $(ADB_FLAG) install -r bin/$(shell dir -w 1 bin | sort | tail -n 1)
