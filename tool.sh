@@ -18,7 +18,7 @@ NC="$normal" # No Color
 # Executors
 
 exec_docker() {
-  docker run -u "$UID" --rm --privileged=true -it -e "APP_ALLOW_MISSING_DEPS=true" -e "USE_SDK_WRAPPER=1" -v "$PWD:/home/data" -v "$HOME/.buildozer:/home/.buildozer" -v "$HOME/.android:/home/.android" "$docker_image" sh -c "echo builder:x:$UID:27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && $*"
+  docker run -u "$UID" --rm --privileged=true -it -e "APP_ALLOW_MISSING_DEPS=true" -e "USE_SDK_WRAPPER=1" -v "$PWD:/home/data" -v "$HOME/.gradle:/home/.gradle" -v "$HOME/.buildozer:/home/.buildozer" -v "$HOME/.android:/home/.android" "$docker_image" sh -c "echo builder:x:$UID:27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && $*"
 }
 
 exec_host() {

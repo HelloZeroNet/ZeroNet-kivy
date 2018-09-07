@@ -74,7 +74,8 @@ services = zn:service.py
 fullscreen = 0
 
 # (list) Permissions
-android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE
+# WRITE_EXTERNAL_STORAGE=already added by default
+android.permissions = INTERNET
 
 # (int) Android API to use
 android.api = 26

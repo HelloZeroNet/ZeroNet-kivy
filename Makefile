@@ -59,7 +59,7 @@ env:
 host-deps: env _pre _deps
 
 docker-deps:
-	$(EXEC) make -C /home/data _pre _deps || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && mkdir -p $(HOME)/.android/cache && sudo chmod 777 $(HOME)/.android/cache && make docker-deps)
+	$(EXEC) make -C /home/data _pre _deps || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && mkdir -p $(HOME)/.gradle && sudo chmod 777 $(HOME)/.gradle && mkdir -p $(HOME)/.android/cache && sudo chmod 777 $(HOME)/.android/cache && make docker-deps)
 
 # Targets
 
