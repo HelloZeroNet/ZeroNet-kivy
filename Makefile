@@ -52,9 +52,9 @@ env:
 	sudo apt-get install -y automake aidl libbz2-dev
 	sudo apt-get install -y python-kivy
 	sudo pip2 install --upgrade "cython == 0.25"
-	sudo pip2 install --upgrade colorama appdirs sh>=1.10,\<1.12.5 jinja2 six clint requests
+	sudo pip2 install --upgrade colorama appdirs 'sh>=1.10,<1.12.5' jinja2 six clint requests
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
-	sudo pip2 install "appdirs" "colorama>=0.3.3" sh>=1.10,\<1.12.5 "jinja2" "six"
+	sudo pip2 install "appdirs" "colorama>=0.3.3" 'sh>=1.10,<1.12.5' "jinja2" "six"
 
 host-deps: env _pre _deps
 
