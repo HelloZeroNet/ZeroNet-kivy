@@ -85,7 +85,8 @@ release-do:
 
 # Old targets
 release-align:
-	zipalign -v -p 4 $(shell find .buildozer/android/platform/build/dists/zeronet -type f -iname "ZeroNet-*-release-unsigned.apk") bin/release.apk
+	rm -f bin/release.apk
+	zipalign -v -p 4 $(shell find bin -type f -iname "*-release-unsigned.apk") bin/release.apk
 release-sign:
 	rm -rf release bin/release
 	mkdir release
