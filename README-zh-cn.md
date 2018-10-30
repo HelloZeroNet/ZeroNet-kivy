@@ -9,17 +9,20 @@ ZeroNet的图形界面控制面板和APP打包，使用Kivy框架
 
 ### 屏幕截图:
 
-软件界面：
+#### 启动界面
+![Startup](/screenshots/startup.png)
+#### UI
+![UI](/screenshots/ui.png)
 
-![](http://i.imgur.com/1VHvdeP.jpg)
+### ZeroNet:
 
-手机浏览器打开主页效果：
+#### 加载界面
+![Loading](/screenshots/loading.png)
+#### ZeroHello
+![ZeroHello](/screenshots/zerohello.png)
+#### ZeroMe
+![ZeroMe](http://i.imgur.com/nog7YPG.png)
 
-![](http://i.imgur.com/mx1nLY0.png)
-
-ZeroMe浏览：
-
-![](http://i.imgur.com/nog7YPG.png)
 
 ## 目标：
 
@@ -45,7 +48,9 @@ ZeroMe浏览：
 
 ## APK下载
 
-[APK下载点这里](../../raw/master/dist/ZeroNet-0.2.3-debug.apk)
+[ » 点击下载](https://github.com/HelloZeroNet/ZeroNet-kivy/releases)
+
+[ » 老版本](https://github.com/mkg20001/ZeroNet-kivy/releases)
 
 ## 如何使用APK
 
@@ -56,15 +61,11 @@ ZeroMe浏览：
 * 遇到bug或其他问题到外部存储/Android/data/包名如android.test.myapp17/files/zero/log里的log看看有什么异常报错
 
 ## 项目结构一览
-
-* zero # 放入ZeroNet本身的全部代码
- - README.md
- - zeronet.py # ZeroNet代码, 被serviceloader.py加载
- - 略...
- - 略...
-* buildozer.spec #  Buildozer的配置，你可以定义APK的包名、标题、版本号、android权限、服务等等
-* DroidSansFallback.ttf # GUI使用的字体，由于汉字的原因，字体文件很大，但可以使用fontmin减小体积。
-* `inject.py_`  # 主要的代码和设计都在这。inject.py文件将被放置到外部存储，所以用户能够免root射入自己的代码和设计，你不射一个？(  `py_`  不是打错，而是为了避免在打包时转为pyo文件特意搞的 )
-* main.py # 入口。做一些准备工作，然后执行inject.py
-* README.md
-* serviceloader.py # Android 服务入口，在buildozer.spec中定义，去加载zero/zeronet.py为服务。
+  * src
+    - zeronet.kv - Gui 布局
+    - main.py - 主文件
+    - service.py - 服务文件
+    - platform_*.py - 平台具体代码
+    * zero -  ZeroNet本身的全部代码 (if content is missing run `git submodule init --recursive`)
+      - zeronet.py - ZeroNet 启动器
+  * buildozer.spec - Buildozer的配置，你可以定义APK的包名、标题、版本号、android权限、服务等等.
