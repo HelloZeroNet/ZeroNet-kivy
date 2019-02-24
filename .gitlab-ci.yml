@@ -25,6 +25,7 @@ docker-image:
   stage: build
   script:
     - bash .ci/bind-cache.sh
+    - export TERM=xterm-256color
     - export DISABLE_PROGRESS=1
     - 'sed -r "s|android.arch = .*|android.arch = $TARGET_ARCH|g" -i buildozer.spec'
     - 'echo -e "EXEC=docker\nDOCKER_IMAGE=$IMAGE_TAG\nDISABLE_PROGRESS=1" > .env'
