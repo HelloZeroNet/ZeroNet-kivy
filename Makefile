@@ -13,10 +13,10 @@ _ci:
 
 _ci_exec:
 	DISABLE_PROGRESS=true make _pre
-	yes | APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
+	(while true; do echo y; done) | APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
 
 _ci_release:
-	yes | APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release
+	(while true; do echo y; done) | APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release
 
 .env:
 	@echo "No .env file found..."
@@ -64,10 +64,10 @@ docker-deps:
 # Targets
 
 debug: .pre
-	yes | $(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android debug
+	(while true; do echo y; done) | $(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android debug
 
 release: .pre
-	yes | $(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android release
+	(while true; do echo y; done) | $(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android release
 
 run: .pre
 	adb $(ADB_FLAG) install -r bin/$(shell dir -w 1 bin | sort | tail -n 1)
