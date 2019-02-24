@@ -10,3 +10,4 @@ screenshots.orig
 *.bak
 .env
 .deps
+vendor
