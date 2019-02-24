@@ -21,11 +21,12 @@ docker-image:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
-docker-build: # TODO: build for all avail archs
+&Build docker-build:
   stage: build
   script:
     - bash .ci/bind-cache.sh
     - export DISABLE_PROGRESS=1
+    - 'sed -r "s|android.arch = .*|android.arch = $TARGET_ARCH|g" -i buildozer.spec'
     - 'echo -e "EXEC=docker\nDOCKER_IMAGE=$IMAGE_TAG\nDISABLE_PROGRESS=1" > .env'
     - docker pull $IMAGE_TAG
     - bash ./tool.sh prebuild
@@ -33,6 +34,14 @@ docker-build: # TODO: build for all avail archs
   artifacts:
     paths:
     - bin
+
+docker-build-armeabi-v7a: *Build
+  variables:
+    TARGET_ARCH: armeabi-v7a
+
+docker-build-arm64-v8a: *Build
+  variables:
+    TARGET_ARCH: arm64-v8a
 
 release:
   stage: release
