@@ -30,12 +30,11 @@ RUN apt-get update
 
 #Locale
 RUN apt-get install language-pack-en -y
-RUN apt update -qq > /dev/null && \
-    apt install -qq --yes --no-install-recommends \
-    locales && \
-    locale-gen en_US.UTF-8 && \
-    update-locale
-ENV LANG="en_US.UTF-8",LANGUAGE="en_US.UTF-8",LC_ALL="en_US.UTF-8"
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+RUN locale-gen en_US.UTF-8
+RUN update-locale
 
 RUN apt-get install -y make sudo
 
