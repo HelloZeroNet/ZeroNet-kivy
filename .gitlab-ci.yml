@@ -31,7 +31,7 @@ docker-image:
     - 'echo -e "EXEC=docker\nDOCKER_IMAGE=$IMAGE_TAG\nDISABLE_PROGRESS=1" > .env'
     - docker pull $IMAGE_TAG
     - bash ./tool.sh prebuild
-    - make _ci
+    - script -q -c "make _ci"
   artifacts:
     paths:
     - bin/
