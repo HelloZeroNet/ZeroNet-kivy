@@ -1,9 +1,42 @@
-build:
+services:
+  - docker:dind
+
+stages:
+  - image
+  - build
+  - release
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+docker-image:
+  stage: image
+  script:
+    - docker build -t $IMAGE_TAG .
+    - docker push $IMAGE_TAG
+
+docker-build: # TODO: build for all avail archs
   stage: build
-  commands:
+  script:
     - bash .ci/bind-cache.sh
     - export DISABLE_PROGRESS=1
-    - 'echo -e "EXEC=docker\nDOCKER_IMAGE=kivy\nDISABLE_PROGRESS=1" > .env'
-    - make docker-build
+    - 'echo -e "EXEC=docker\nDOCKER_IMAGE=$IMAGE_TAG\nDISABLE_PROGRESS=1" > .env'
+    - docker pull $IMAGE_TAG
     - bash ./tool.sh prebuild
     - make _ci
+  artifacts:
+    paths:
+    - bin
+
+release:
+  stage: release
+  script:
+    - ./release.sh
+  only:
+    - master
