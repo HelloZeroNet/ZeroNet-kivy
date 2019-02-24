@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV HOME /home
 
@@ -30,16 +30,17 @@ RUN apt-get update
 
 #Locale
 RUN apt-get install language-pack-en -y
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-RUN locale-gen en_US.UTF-8
-RUN update-locale
+RUN apt update -qq > /dev/null && \
+    apt install -qq --yes --no-install-recommends \
+    locales && \
+    locale-gen en_US.UTF-8 && \
+    update-locale
+ENV LANG="en_US.UTF-8",LANGUAGE="en_US.UTF-8",LC_ALL="en_US.UTF-8"
 
 RUN apt-get install -y make sudo
 
 RUN chmod 777 /home
-#This is required, fixes: KeyError: 'getpwuid(): uid not found: 1000'
+#This is required, fixes: KeyError: 'getpwuid(): uid not found: 1000' (later tool.sh adds user with right UID, done dynamic so we don't have to mess with user perms)
 RUN chmod 777 /etc/passwd
 
 ADD Makefile .
