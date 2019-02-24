@@ -1,5 +1,9 @@
 [app]
 
+# Ignore root (for ci)
+warn_on_root = 0
+buildozer.warn_on_root = 0
+
 # (str) Title of your application
 title = ZeroNet
 
