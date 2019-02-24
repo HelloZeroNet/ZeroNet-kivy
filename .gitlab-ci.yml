@@ -21,7 +21,7 @@ docker-image:
     - docker build -t $IMAGE_TAG .
     - docker push $IMAGE_TAG
 
-&Build docker-build:
+.build: &build
   stage: build
   script:
     - bash .ci/bind-cache.sh
@@ -34,13 +34,15 @@ docker-image:
     - make _ci
   artifacts:
     paths:
-    - bin
+    - bin/
 
-docker-build-armeabi-v7a: *Build
+docker-build-armeabi-v7a:
+  <<: *build
   variables:
     TARGET_ARCH: armeabi-v7a
 
-docker-build-arm64-v8a: *Build
+docker-build-arm64-v8a:
+  <<: *build
   variables:
     TARGET_ARCH: arm64-v8a
 
