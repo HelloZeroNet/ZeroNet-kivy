@@ -30,11 +30,11 @@ docker-image:
     - 'sed -r "s|android.arch = .*|android.arch = $TARGET_ARCH|g" -i buildozer.spec'
     - 'echo -e "EXEC=docker\nDOCKER_IMAGE=$IMAGE_TAG\nDISABLE_PROGRESS=1" > .env'
     - docker pull $IMAGE_TAG
-    - bash ./tool.sh prebuild
     - script -q -c "make _ci"
+    - mkdir ci-out && mv bin ci-out/$CI_JOB_NAME
   artifacts:
     paths:
-    - bin/
+    - ci-out/
 
 docker-build-armeabi-v7a:
   <<: *build

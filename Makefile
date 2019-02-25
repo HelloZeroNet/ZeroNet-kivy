@@ -12,11 +12,9 @@ _ci:
 	$(EXEC) make -C /home/data _ci_exec
 
 _ci_exec:
-	DISABLE_PROGRESS=true make _pre
-	 APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
-
-_ci_release:
-	 APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release
+	DISABLE_PROGRESS=true make .pre
+	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
+	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release # || (ls bin | grep release-unsigned.apk)
 
 .env:
 	@echo "No .env file found..."
@@ -29,7 +27,7 @@ _ci_release:
 .pre: .env .deps
 	$(TOOL) prebuild
 
-_pre:
+_pre: .pre
 _deps: # did something, will cleanup later
 	touch .deps
 
@@ -54,7 +52,7 @@ host-deps: env _pre _deps
 
 docker-deps:
 	mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && mkdir -p $(HOME)/.gradle && sudo chmod 777 $(HOME)/.gradle && mkdir -p $(HOME)/.android/cache && sudo chmod 777 $(HOME)/.android/cache
-	make _deps
+	$(EXEC) make -C /home/data _pre _deps
 #	$(EXEC) make -C /home/data _pre _deps || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && mkdir -p $(HOME)/.gradle && sudo chmod 777 $(HOME)/.gradle && mkdir -p $(HOME)/.android/cache && sudo chmod 777 $(HOME)/.android/cache && make docker-deps)
 
 # Targets
