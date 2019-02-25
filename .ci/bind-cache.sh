@@ -12,9 +12,11 @@ bind_folder() {
   CACHE="/cache/kivy/$2"
 
   echo "[CACHE] Bind $LOCAL to $CACHE"
-  create_and_chmod "$LOCAL"
+  rm -rf "$LOCAL"
+  create_and_chmod "$(dirname "$LOCAL")"
   create_and_chmod "$CACHE"
-  sudo mount --bind "$CACHE" "$LOCAL"
+  # sudo mount --bind "$CACHE" "$LOCAL"
+  sudo ln -s "$CACHE" "$LOCAL"
 }
 
 bind_folder "$HOME" .buildozer/android
