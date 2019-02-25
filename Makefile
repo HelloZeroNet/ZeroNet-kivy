@@ -12,7 +12,6 @@ _ci:
 	$(EXEC) make -C /home/data _ci_exec
 
 _ci_exec:
-	DISABLE_PROGRESS=true make .pre
 	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
 	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release # || (ls bin | grep release-unsigned.apk)
 
