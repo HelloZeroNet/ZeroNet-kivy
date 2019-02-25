@@ -12,8 +12,8 @@ _ci: # Wrapper
 	$(EXEC) make -C /home/data _ci_exec
 
 _ci_exec: # Actual commands
-	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
-	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release
+	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 CI=1 buildozer android debug
+	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 CI=1 buildozer android release
 
 # Setup
 
