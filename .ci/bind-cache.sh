@@ -8,14 +8,15 @@ create_and_chmod() {
 }
 
 bind_folder() {
-  LOCAL="$HOME/$1"
-  CACHE="/cache/kivy/$1"
+  LOCAL="$1/$2"
+  CACHE="/cache/kivy/$2"
 
   echo "[CACHE] Bind $LOCAL to $CACHE"
   create_and_chmod "$LOCAL"
   create_and_chmod "$CACHE"
-  sudo mount --bind "$LOCAL" "$CACHE"
+  sudo mount --bind "$CACHE" "$LOCAL"
 }
 
-bind_folder .buildozer/android
-bind_folder .gradle
+bind_folder "$HOME" .buildozer/android
+bind_folder "$HOME" .gradle
+bind_folder "$HOME" .android
