@@ -6,31 +6,16 @@ TOOL=bash ./tool.sh
 EXEC=$(TOOL) exec
 EXEC_NAME=$(shell $(TOOL) _getvar EXEC)
 
-# Internal
+# Continuous Integration (gitlab-ci)
 
-_ci:
+_ci: # Wrapper
 	$(EXEC) make -C /home/data _ci_exec
 
-_ci_exec:
+_ci_exec: # Actual commands
 	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android debug
-	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release # || (ls bin | grep release-unsigned.apk)
+	APP_ALLOW_MISSING_DEPS=true CI_MODE=1 buildozer android release
 
-.env:
-	@echo "No .env file found..."
-	@echo "Running setup..."
-	$(TOOL) setup
-
-.deps:
-	make -C . $(EXEC_NAME)-deps
-
-.pre: .env .deps
-	$(TOOL) prebuild
-
-_pre: .pre
-_deps: # did something, will cleanup later
-	touch .deps
-
-# Pre-targets
+# Setup
 
 env:
 	sudo dpkg --add-architecture i386
@@ -47,20 +32,39 @@ env:
 	sudo pip2 install --upgrade git+https://github.com/mkg20001/buildozer kivy
 	sudo pip2 install "appdirs" "colorama>=0.3.3" 'sh>=1.10,<1.12.5' "jinja2" "six"
 
-host-deps: env _pre _deps
+# Targets for setup
+
+setup: .pre
+.env:
+	@echo "No .env file found..."
+	@echo "Running setup..."
+	$(TOOL) setup
+
+.pre: .env .deps
+
+# Targets for specific build modes
+
+.deps:
+	make -C . $(EXEC_NAME)-deps
+	touch .deps
+
+host-deps: prebuild
 
 docker-deps:
+	# TODO: rethink below cmd
 	mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && mkdir -p $(HOME)/.gradle && sudo chmod 777 $(HOME)/.gradle && mkdir -p $(HOME)/.android/cache && sudo chmod 777 $(HOME)/.android/cache
-	$(EXEC) make -C /home/data _pre _deps
-#	$(EXEC) make -C /home/data _pre _deps || (mkdir -p $(HOME)/.buildozer && sudo chmod 777 $(HOME)/.buildozer && mkdir -p $(HOME)/.gradle && sudo chmod 777 $(HOME)/.gradle && mkdir -p $(HOME)/.android/cache && sudo chmod 777 $(HOME)/.android/cache && make docker-deps)
+	$(EXEC) make -C /home/data prebuild # Launch in wrapper
 
-# Targets
+docker-build:
+	docker build -t kivy .
+
+# Actual Targets
 
 debug: .pre
-	 $(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android debug
+	$(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android debug
 
 release: .pre
-	 $(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android release
+	$(EXEC) env APP_ALLOW_MISSING_DEPS=true buildozer -v android release
 
 run: .pre
 	adb $(ADB_FLAG) install -r bin/$(shell dir -w 1 bin | sort | tail -n 1)
@@ -69,14 +73,13 @@ run: .pre
 test: .pre
 	$(EXEC) buildozer -v android deploy logcat
 
-docker-build:
-	docker build -t kivy .
+prebuild: .env
+	$(TOOL) prebuild
 
+# Old targets (will be replaced by automated scripts later)
 release-do:
 	cp -v bin/release/ZeroNet.apk $(HOME)/ZeroNet/data/1A9gZwjdcTh3bpdriaWm7Z4LNdUL8GhDu2
 	cp -v bin/release/metadata.json $(HOME)/ZeroNet/data/1A9gZwjdcTh3bpdriaWm7Z4LNdUL8GhDu2
-
-# Old targets
 release-align:
 	rm -f bin/release.apk
 	zipalign -v -p 4 $(shell find bin -type f -iname "*-release-unsigned.apk") bin/release.apk

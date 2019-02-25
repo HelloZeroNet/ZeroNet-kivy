@@ -101,7 +101,7 @@ case "$1" in
       docker)
         echo "Which image should be used?"
         echo "(The 'kivy' image should only be used if you are building the image yourself using '$0 docker-build')"
-        menu "mkg20001/zeronet-kivy:latest kivy"
+        menu "registry.gitlab.com/mkg20001-gh/zeronet-kivy:latest kivy"
         echo "DOCKER_IMAGE=$res" >> .env
         [ "$res" != "kivy" ] && docker pull "$res"
         ;;
