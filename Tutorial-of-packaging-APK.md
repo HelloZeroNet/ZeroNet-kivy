@@ -29,7 +29,6 @@ Required things:
      - If you got it installed run `make run`
      - If you are using an emulator append `ADB_FLAG=-e` to the command
 
-
 ### Local machine
  - Run `make .env`
 
