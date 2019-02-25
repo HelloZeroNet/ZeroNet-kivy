@@ -90,20 +90,7 @@ release-sign:
 	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify release/ZeroNet.apk
 	mv release bin/release
 	$(TOOL) metadata
-update:
-	if [ -e .pre ]; then rm -rf src/zero && git submodule update; fi
-	git submodule foreach git pull origin master
-zeroup: #update zeronet
-	if [ -e .pre ]; then rm -rf src/zero && git submodule update && rm .pre; fi
-	git -C src/zero remote update -p
-	git -C src/zero merge --ff-only origin/master
-zeroup-commit:
-	git commit -m "Update ZeroNet to $(shell cat src/zero/src/Config.py | grep self.rev | head -n 1 | grep -o "[0-9]*")" src/zero
 vagrant:
 	vagrant up
 watch: #runs on desktop
 	nodemon -e kv,py,json -x /usr/bin/python2 src/main.py
-clean:
-	rm -fv src/*.pyc
-distclean: clean
-	buildozer distclean
