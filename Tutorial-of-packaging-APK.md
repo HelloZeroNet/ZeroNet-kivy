@@ -1,5 +1,7 @@
 # Guide:
 
+**NOTE: Currently outdated, will be updated soon**
+
 Tested on Ubuntu 16.04
 
 Required things:
