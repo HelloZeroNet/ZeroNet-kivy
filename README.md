@@ -1,13 +1,24 @@
 # ZeroNet-kivy
-[![Build Status](https://travis-ci.org/HelloZeroNet/ZeroNet-kivy.svg?branch=master)](https://travis-ci.org/HelloZeroNet/ZeroNet-kivy)
 [简体中文](./README-zh-cn.md)
 
-The GUI control panel and APP packaging for ZeroNet using Kivy framework
-[Kivy](https://kivy.org) is an open-source cross-platform GUI framework written in Python. It works on not only Android but also iOS, even desktop (Win, Linux, Mac ).
+This app is a simple GUI to control the ZeroNet client. It is packaged using buildozer and uses [Kivy](https://kivy.io).
 
-Currently the code of this repo only works on Android, anyone interested in iOS dev are welcome.
+Currently the code of this repo only works on Android, anyone interested in iOS development is welcome to contribute. Simply drop your comment on [this page](https://github.com/HelloZeroNet/ZeroNet-kivy/issues/35) if you want to become a maintainer for that platform!
 Currently this project is in Alpha phase, lack of GUI functionalities and creative design, containing many code for testing purpose. Please feel free to contribute!
 
+# Downloads
+
+You can download the latest version of the app from:
+
+ - the [ » PlayStore](https://play.google.com/store/apps/details?id=net.mkg20001.zeronet)
+ - the F-Droid repository for ZeroNet: TODO!
+ - [ » GitHub Releases](https://github.com/HelloZeroNet/ZeroNet-kivy/releases)
+
+## Downloads for really old phones
+
+If you're using a phone with Android 4 or less then you can't use this app. If you insist you can use the [ » old version](https://gateway.ipfs.io/ipfs/QmWKSoPfXpfvTU7jtiwn51zPVFZ6fWMiKNgDBzbnH9krXY/ZeroNet-OLDVERSION.apk). But beware: NO functionality and NO security are guaranteed.
+
+You can also go to the list of [ » older releases](https://github.com/mkg20001/ZeroNet-kivy/releases) if you're intrested in the very first versions
 
 ## Screenshots:
 
@@ -50,12 +61,6 @@ Actually, some above goals are out of the scope of this project, which means we 
 
 The packaging is not hard, thanks to Kivy's Buildozer which automates many things for us.
 [The tutorial is here, which shows you in details how to do that.](./Tutorial-of-packaging-APK.md)
-
-## Download APK
-
-[ » Download from here](https://github.com/HelloZeroNet/ZeroNet-kivy/releases)
-
-[ » Older releases](https://github.com/mkg20001/ZeroNet-kivy/releases)
 
 ## How to use the APK
 
