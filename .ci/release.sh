@@ -17,3 +17,5 @@ for arch_path in ci-out/*; do
     mv -v "$f" "${fout}"
   done
 done
+
+bash ./tool.sh metadata

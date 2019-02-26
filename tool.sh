@@ -140,7 +140,7 @@ case "$1" in
     touch .pre
     ;;
   metadata)
-    echo "{\"rev\":$(getmeta self.rev),\"ver\":$(getmeta self.version),\"date\":$(expr $(date +%s) \* 1000)}" > bin/release/metadata.json
+    echo "{\"rev\":$(getmeta self.rev),\"ver\":$(getmeta self.version),\"date\":$(expr $(date +%s) \* 1000)}" > release/metadata.json
     ;;
   post-sign)
     cp -v bin/release/{ZeroNet.apk,metadata.json} $HOME/ZeroNet/data/1A9gZwjdcTh3bpdriaWm7Z4LNdUL8GhDu2
