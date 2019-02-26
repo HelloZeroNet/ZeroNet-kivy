@@ -32,6 +32,8 @@ docker-image:
     - docker pull $IMAGE_TAG
     - bash ./tool.sh prebuild
     - script -q -e -c "make _ci"
+    - ls bin | grep debug | grep .apk # ensure job generated debug apk
+    - ls bin | grep release | grep .apk # ensure job generated release apk
     - mkdir ci-out && mv bin ci-out/$CI_JOB_NAME && mv buildozer.spec ci-out/$CI_JOB_NAME/
   artifacts:
     paths:
