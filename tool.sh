@@ -18,7 +18,19 @@ NC="$normal" # No Color
 # Executors
 
 exec_docker() {
-  docker run -u "$UID" --rm --privileged=true -it -e "APP_ALLOW_MISSING_DEPS=true" -e "USE_SDK_WRAPPER=1" -v "$PWD:/home/data" -v "$HOME/.gradle:/home/.gradle" -v "$HOME/.buildozer:/home/.buildozer" -v "$HOME/.android:/home/.android" "$docker_image" sh -c "echo builder:x:$UID:27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && $*"
+  DOCKER_CMD=(docker run -u "$UID" --rm "--privileged=true" -it -e "APP_ALLOW_MISSING_DEPS=true" -e "USE_SDK_WRAPPER=1" -v "$PWD:/home/data" -v "$HOME/.gradle:/home/.gradle" -v "$HOME/.buildozer:/home/.buildozer" -v "$HOME/.android:/home/.android")
+
+  if [ ! -z "$USE_VENDOR_BUILDOZER" ]; then
+    DOCKER_CMD+=(-v "$PWD/vendor/buildozer/buildozer:/usr/local/lib/python2.7/dist-packages/buildozer")
+  fi
+
+  if [ ! -z "$CI" ]; then
+    DOCKER_CMD+=(-e "CI=$CI")
+  fi
+
+  DOCKER_CMD+=("$docker_image" sh -c "echo builder:x:$UID:27:Builder:/home:/bin/bash | tee /etc/passwd > /dev/null && cd /home/data && $*")
+
+  "${DOCKER_CMD[@]}"
 }
 
 exec_host() {

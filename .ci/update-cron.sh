@@ -7,6 +7,8 @@ if [ -e .pre ]; then
   rm .pre
 fi
 
+git pull --recurse-submodule
+
 # get version wrapper
 zn_ver() {
   pushd src/zero/src
