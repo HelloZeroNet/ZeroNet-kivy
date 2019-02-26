@@ -90,7 +90,5 @@ release-sign:
 	$(shell find $(ANDROID_HOME) -iname "apksigner" | sort | tac | head -n 1) verify release/ZeroNet.apk
 	mv release bin/release
 	$(TOOL) metadata
-vagrant:
-	vagrant up
 watch: #runs on desktop
 	nodemon -e kv,py,json -x /usr/bin/python2 src/main.py
