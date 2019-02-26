@@ -1,4 +1,5 @@
 #!/bin/sh
-#Wrapper for Docker Buildozer
+# Wrapper for docker Buildozer
 
-make -sC $(readlink -f $(dirname $(readlink -f "$0"))) docker-exec "ARGS=$@"
+pushd "$(readlink -f "$(dirname "$(readlink -f "$0")")")"
+exec bash ./tool.sh buildozer
