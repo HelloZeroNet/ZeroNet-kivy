@@ -56,7 +56,7 @@ x86:
 release:
   stage: release
   script:
-    - ./release.sh
+    - ./.ci/release.sh
   only:
     - master
   artifacts:
