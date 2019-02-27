@@ -14,6 +14,8 @@ for arch_path in ci-out/*; do
 
   for f in "$release_unaligned" "$debug"; do
     fout=${f/".apk"/"-$arch.apk"}
+    fout=$(basename "$fout")
+    fout="release/$fout"
     mv -v "$f" "${fout}"
   done
 done
