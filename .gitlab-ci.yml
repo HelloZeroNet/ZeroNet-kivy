@@ -55,6 +55,12 @@ x86:
     TARGET_ARCH: x86
   allow_failure: true
 
+x86-64:
+  <<: *build
+  variables:
+    TARGET_ARCH: x86_64
+  allow_failure: true
+
 release:
   stage: release
   script:
