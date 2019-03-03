@@ -2,7 +2,7 @@
 
 set -e
 
-mkdir -p package/{release,debug,spec}
+mkdir -p package/{unsigned,debug,spec}
 
 for arch_path in ci-out/*; do
   arch=$(basename "$arch_path")
@@ -11,12 +11,12 @@ for arch_path in ci-out/*; do
   cat "$arch_path/buildozer.spec" | sed "s|^#.+||g" | grep -v "^\$" > "package/spec/buildozer.$arch.spec"
 
   # get apks
-  release_unaligned=$(echo "$arch_path/"*release-unsigned*)
+  release_unsigned=$(echo "$arch_path/"*release-unsigned*)
   debug=$(echo "$arch_path/"*debug*)
 
   # move apks
-  for f in "$release_unaligned" "$debug"; do
-    outfolder=$(echo "$f" | sed "s|-unaligned||g" | sed -r "s|.+-([a-z-]+).apk|\1|g")
+  for f in "$release_unsigned" "$debug"; do
+    outfolder=$(echo "$f")
     fout=${f/".apk"/"-$arch.apk"}
     fout=$(basename "$fout")
     fout="package/$outfolder/$fout"
