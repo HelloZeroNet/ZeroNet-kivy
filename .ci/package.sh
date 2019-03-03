@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# test: mkdir -p ci-out/{a,b,c} && touch ci-out/{a,b,c}/{buildozer.spec,test-{release-unsigned,debug}.apk} && for f in ci-out/*/buildozer.spec; do echo -e "# test\ntest\n\n" > "$f"; done
+
 set -e
 
 mkdir -p package/{unsigned,debug,spec}
