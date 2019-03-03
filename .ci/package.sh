@@ -2,7 +2,9 @@
 
 set -e
 
-mkdir -p release/{release,debug,spec}
+mkdir -p release/release
+mkdir -p release/debug
+mkdir -p release/spec
 
 for arch_path in ci-out/*; do
   arch=$(basename "$arch_path")
