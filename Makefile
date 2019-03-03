@@ -68,6 +68,9 @@ release: .pre
 
 run: .pre
 	adb $(ADB_FLAG) install -r bin/$(shell dir -w 1 bin | sort | tail -n 1)
+	make logcat
+
+logcat:
 	adb $(ADB_FLAG) logcat | grep "[A-Z] python\|linker\|art\|zn\|watch1\|watch2"
 
 test: .pre

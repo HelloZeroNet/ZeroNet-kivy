@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Wrapper for docker Buildozer
 
 pushd "$(readlink -f "$(dirname "$(readlink -f "$0")")")"
