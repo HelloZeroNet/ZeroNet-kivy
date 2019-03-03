@@ -2,6 +2,8 @@
 
 set -e
 
+chmod 777 "$HOME"
+
 create_and_chmod() {
   mkdir -p "$1"
   sudo chmod 777 "$1"

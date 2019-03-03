@@ -11,7 +11,7 @@ Currently this project is in Alpha phase, lack of GUI functionalities and creati
 You can download the latest version of the app from:
 
  - the [ » PlayStore](https://play.google.com/store/apps/details?id=net.mkg20001.zeronet)
- - the F-Droid repository for ZeroNet: TODO!
+ - the [ » F-Droid repository for ZeroNet](https://f-droid.mkg20001.io/repos/jVVkbOD2it_bf_UxFIGGh1qa950KrUsq/repo/?fingerprint=005E888A5A203D40E28F372B939B8E5995FB29081EFC845DB99A8D4C14B509E2)
  - [ » GitHub Releases](https://github.com/HelloZeroNet/ZeroNet-kivy/releases)
 
 ## Downloads for really old phones
