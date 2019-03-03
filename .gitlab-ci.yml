@@ -65,9 +65,14 @@ package:
 release-nightly:
   stage: release
   script:
-  - /bin/true
+  - ./.ci/release-nightly.sh
   only:
   - master
+  tags:
+  - argon
+  artifacts:
+    paths:
+    - release/
 
 release-production:
   stage: release
@@ -78,3 +83,6 @@ release-production:
   except:
   - branches
   when: manual
+  artifacts:
+    paths:
+    - release/
