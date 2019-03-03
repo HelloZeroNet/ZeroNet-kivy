@@ -16,7 +16,7 @@ for arch_path in ci-out/*; do
 
   # move apks
   for f in "$release_unsigned" "$debug"; do
-    outfolder=$(echo "$f")
+    outfolder=$(echo "$f" | sed -r "s|.+-([a-z-]+).apk|\1|g")
     fout=${f/".apk"/"-$arch.apk"}
     fout=$(basename "$fout")
     fout="package/$outfolder/$fout"
