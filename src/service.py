@@ -10,11 +10,25 @@ env = loadEnv()
 if env["platform"] == "android":
     import android
     from jnius import autoclass
+
+    ANDROID_VERSION = autoclass('android.os.Build$VERSION')
+    SDK_INT = ANDROID_VERSION.SDK_INT
+
     Service = autoclass('org.kivy.android.PythonService').mService
-    notifi=autoclass("android.app.Notification$Builder")(Service)
+    notifi = autoclass("android.app.Notification$Builder")(Service)
     notifi.setContentTitle("ZeroNet")
     notifi.setContentText("ZeroNet is running")
-    notification=notifi.getNotification()
+
+    if SDK_INT > 26:
+        manager = autoclass('android.app.NotificationManager')
+        channel = autoclass('android.app.NotificationChannel')
+
+        app_channel = channel(
+          "service_zn", "ZeroNet Background Service", manager.IMPORTANCE_MIN
+        )
+        Service.getSystemService(manager).createNotificationChannel(app_channel)
+        notification.setChannel("service_zn")
+    notification = notifi.getNotification()
     Service.startForeground(233,notification)
 
 print "env %s" % env
