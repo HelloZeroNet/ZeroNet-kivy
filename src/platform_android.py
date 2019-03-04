@@ -42,7 +42,7 @@ def realpath():
 def getDebug():
     return autoclass(activity.getPackageName() + ".BuildConfig").DEBUG
 
-def wrapSentry(mainFnc):
+def wrapSentry(mainFunc):
     if not getDebug():
         import traceback
         try:
