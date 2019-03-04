@@ -2,4 +2,4 @@
 # Wrapper for docker Buildozer
 
 pushd "$(readlink -f "$(dirname "$(readlink -f "$0")")")"
-exec bash ./tool.sh buildozer
+exec bash ./tool.sh exec buildozer "$@"
