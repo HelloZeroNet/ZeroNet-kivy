@@ -53,4 +53,15 @@ def main():
     zeronet.main()
 
 if __name__ == '__main__':
-    main()
+    if True: # TODO: really only allow this in prod
+        import traceback
+        import sentry_sdk
+        from sentry_sdk import capture_exception
+        sentry_sdk.init("https://1cc0c8280fa54361920e75f014add9fe@sentry.io/1406946")
+        try:
+            main()
+        except Exception as e:
+            traceback.print_exc()
+            capture_exception(e)
+    else:
+        main()
