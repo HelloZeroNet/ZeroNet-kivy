@@ -27,7 +27,7 @@ if env["platform"] == "android":
           "service_zn", "ZeroNet Background Service", manager.IMPORTANCE_MIN
         )
         Service.getSystemService(manager).createNotificationChannel(app_channel)
-        notification.setChannel("service_zn")
+        notifi.setChannel("service_zn")
     notification = notifi.getNotification()
     Service.startForeground(233,notification)
 
