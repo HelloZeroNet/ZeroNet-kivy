@@ -42,6 +42,24 @@ def realpath():
 def getDebug():
     return autoclass(activity.getPackageName() + ".BuildConfig").DEBUG
 
+def wrapSentry(mainFnc):
+    if not getDebug():
+        import traceback
+        try:
+            import sentry_sdk
+            from sentry_sdk import capture_exception
+            sentry_sdk.init("https://1cc0c8280fa54361920e75f014add9fe@sentry.io/1406946")
+            try:
+                mainFunc()
+            except Exception as e:
+                traceback.print_exc()
+                capture_exception(e)
+        except Exception as e:
+            traceback.print_exc()
+            mainFunc()
+    else:
+        mainFunc()
+
 # Generate a SSL certificate using module M2Crypto,  an existing one will
 # be overwritten .
 

@@ -3,7 +3,7 @@ from webbrowser import open as browser
 from kivy.app import App
 from kivy.lang import Builder
 
-from os_platform import Service, platform
+from os_platform import Service, platform, wrapSentry
 from zeronet_config import getConfigValue
 
 
@@ -29,15 +29,4 @@ class ZeronetApp(App):
 if __name__ == "__main__":
     '''Start the application'''
 
-    if True: # TODO: really only allow this in prod
-        import traceback
-        import sentry_sdk
-        from sentry_sdk import capture_exception
-        sentry_sdk.init("https://1cc0c8280fa54361920e75f014add9fe@sentry.io/1406946")
-        try:
-            ZeronetApp().run()
-        except Exception as e:
-            traceback.print_exc()
-            capture_exception(e)
-    else:
-        ZeronetApp().run()
+    wrapSentry(ZeronetApp().run)
