@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mkdir release
+
 for f in package/unsigned/*.apk; do
   OUT=${f/"package/unsigned/"/"release/"}
   OUT=${OUT/"-unsigned"/"-nightly"}
