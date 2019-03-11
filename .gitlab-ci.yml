@@ -6,6 +6,7 @@ stages:
   - build
   - package
   - release
+  - push-fdroid
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -44,13 +45,11 @@ x86:
   <<: *build
   variables:
     TARGET_ARCH: x86
-  allow_failure: true
 
 x86-64:
   <<: *build
   variables:
     TARGET_ARCH: x86_64
-  allow_failure: true
 
 package:
   stage: package
@@ -78,7 +77,7 @@ release-nightly:
 release-production:
   stage: release
   script:
-  - /bin/true
+  - ./.ci/download-signed-stable.sh
   only:
   - tags
   except:
@@ -87,3 +86,8 @@ release-production:
   artifacts:
     paths:
     - release/
+
+push-to-fdroid:
+  stage: push-fdroid
+  script:
+  - ./.ci/push-fdroid.sh
