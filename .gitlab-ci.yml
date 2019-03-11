@@ -6,7 +6,7 @@ stages:
   - build
   - package
   - release
-  - push-fdroid
+  - fdroid
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -88,6 +88,6 @@ release-production:
     - release/
 
 push-to-fdroid:
-  stage: push-fdroid
+  stage: fdroid
   script:
   - ./.ci/push-fdroid.sh
