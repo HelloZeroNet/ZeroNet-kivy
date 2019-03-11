@@ -27,11 +27,6 @@ if [ -z "$CI_COMMIT_TAG" ]; then # build a nightly
   sed -r "s|VER_SUFFIX.+|VER_SUFFIX=$SUFFIX|g" -i .version.sh
 fi
 
-if [ ! -z "$MINTARGET" ]; then
-  replace_var android.minapi "$MINTARGET"
-  replace_var android.ndk_api "$MINTARGET"
-fi
-
 # setup
 replace_var android.arch "$TARGET_ARCH"
 echo -e "EXEC=docker\nDOCKER_IMAGE=$IMAGE_TAG\nDISABLE_PROGRESS=1" > .env
