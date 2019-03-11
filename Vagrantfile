@@ -70,6 +70,8 @@ Vagrant.configure("2") do |config|
    sudo apt-get update
    sudo apt-get install -y make sudo
    echo -e "EXEC=host\n" > /vagrant/.env
+   sleep 5s # fix clock skew error
+   sudo make -C /vagrant env
    sudo make -C /vagrant .pre
   SHELL
 end
