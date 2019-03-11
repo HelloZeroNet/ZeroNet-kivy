@@ -44,12 +44,38 @@ x86:
   <<: *build
   variables:
     TARGET_ARCH: x86
-  allow_failure: true
 
 x86-64:
   <<: *build
   variables:
     TARGET_ARCH: x86_64
+
+armeabi-v7a-old:
+  <<: *build
+  variables:
+    TARGET_ARCH: armeabi-v7a
+    MINTARGET: 14
+  allow_failure: true
+
+arm64-v8a-old:
+  <<: *build
+  variables:
+    TARGET_ARCH: arm64-v8a
+    MINTARGET: 14
+  allow_failure: true
+
+x86-old:
+  <<: *build
+  variables:
+    TARGET_ARCH: x86
+    MINTARGET: 14
+  allow_failure: true
+
+x86-64-old:
+  <<: *build
+  variables:
+    TARGET_ARCH: x86_64
+    MINTARGET: 14
   allow_failure: true
 
 package:
@@ -78,7 +104,7 @@ release-nightly:
 release-production:
   stage: release
   script:
-  - /bin/true
+  - ./.ci/upload-production.sh
   only:
   - tags
   except:
