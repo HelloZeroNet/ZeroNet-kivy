@@ -1,3 +1,9 @@
 [submodule "src/zero"]
 	path = src/zero
 	url = https://github.com/HelloZeroNet/ZeroNet
+[submodule "vendor/buildozer"]
+	path = vendor/buildozer
+	url = https://ithub.com/mkg20001/buildozer
+[submodule "vendor/python-for-android"]
+	path = vendor/python-for-android
+	url = https://github.com/mkg20001/python-for-android
