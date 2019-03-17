@@ -34,8 +34,8 @@ if env["platform"] == "android":
 #    else:
 #        notification = notifi.build()
 #        Service.startForeground(233,notification)
-     notification = notifi.build()
-     Service.startForeground(233,notification)
+    notification = notifi.build()
+    Service.startForeground(233,notification)
 
 print "env %s" % env
 
