@@ -93,11 +93,10 @@ fullscreen = 0
 
 # (list) Permissions
 # WRITE_EXTERNAL_STORAGE=already added by default
-android.permissions = INTERNET
+android.permissions = INTERNET,FOREGROUND_SERVICE
 
 # (int) Target Android API, should be as high as possible.
 android.api = 28
-# android.api = 27
 
 # (int) Minimum API your APK will support.
 android.minapi = 21
