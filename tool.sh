@@ -20,9 +20,9 @@ NC="$normal" # No Color
 exec_docker() {
   DOCKER_CMD=(docker run -u "$UID" --rm "--privileged=true" -it -e "APP_ALLOW_MISSING_DEPS=true" -e "USE_SDK_WRAPPER=1" -v "$PWD:/home/data" -v "$HOME/.gradle:/home/.gradle" -v "$HOME/.buildozer:/home/.buildozer" -v "$HOME/.android:/home/.android")
 
-  if [ ! -z "$USE_VENDOR_BUILDOZER" ]; then
-    DOCKER_CMD+=(-v "$PWD/vendor/buildozer/buildozer:/usr/local/lib/python2.7/dist-packages/buildozer")
-  fi
+  # if [ ! -z "$USE_VENDOR_BUILDOZER" ]; then
+  DOCKER_CMD+=(-v "$PWD/vendor/buildozer/buildozer:/usr/local/lib/python2.7/dist-packages/buildozer")
+  # fi
 
   if [ ! -z "$CI" ]; then
     DOCKER_CMD+=(-e "CI=$CI")
