@@ -20,7 +20,7 @@ if env["platform"] == "android":
     notifi.setContentTitle("ZeroNet")
     notifi.setContentText("ZeroNet is running")
 
-    if SDK_INT > 26:
+    if SDK_INT >= 26:
         manager = autoclass('android.app.NotificationManager')
         channel = autoclass('android.app.NotificationChannel')
 
@@ -29,8 +29,13 @@ if env["platform"] == "android":
         )
         Service.getSystemService(manager).createNotificationChannel(app_channel)
         notifi.setChannel("service_zn")
-    notification = notifi.getNotification()
-    Service.startForeground(233,notification)
+#    if SDK_INT >= 28:
+#        Service.startForeground(233,notifi)
+#    else:
+#        notification = notifi.build()
+#        Service.startForeground(233,notification)
+     notification = notifi.build()
+     Service.startForeground(233,notification)
 
 print "env %s" % env
 
