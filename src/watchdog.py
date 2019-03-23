@@ -8,7 +8,7 @@ from env_json import loadEnv
 if "watchdog_id" not in os.environ:
     raise Exception("No watchdog id!")
 id = int(os.environ["watchdog_id"])
-print "This is watchdog %s" % id
+print("This is watchdog %s" % id)
 
 service = platform.Service()
 service.setPid("watchdog%s" % str(id), os.getpid())
@@ -17,7 +17,7 @@ service.setPid("watchdog%s" % str(id), os.getpid())
 def isRunning(what):
     i = service.isRunning(what)
     if not i:
-        print "%s is not running, starting now" % what
+        print("%s is not running, starting now" % what)
     # else:
     #    print "%s is running, pid=%s" % (what,service.getPid(what))
     return i

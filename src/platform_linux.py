@@ -17,7 +17,7 @@ def getSystemLang(index=0):
     l = ls[index]
     if l is None:
         return "en"  # No locales
-    print "LOCALE: %s" % l
+    print("LOCALE: %s" % l)
     match = re.search("^([a-z]{2})_[A-Z]+.*", str(l))
     if match:
         return match.group(1)
@@ -52,7 +52,7 @@ class pipeThread (threading.Thread):
     def run(self):
         # print "Starting "+self.name
         self.args.communicate()
-        print self.name + " has exited"
+        print(self.name + " has exited")
 
 
 class Service(SystemService):
@@ -80,7 +80,7 @@ class Service(SystemService):
 
     def runGeneric(self, what, name, pidid):
         if self.isRunning(pidid):
-            print "Skip starting %s, already running as %s" % (name, self.getPid(pidid))
+            print("Skip starting %s, already running as %s" % (name, self.getPid(pidid)))
             return False
         self.count += 1
         env = os.environ

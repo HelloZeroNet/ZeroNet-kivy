@@ -20,7 +20,7 @@ mActivity = autoclass('org.kivy.android.PythonActivity').mActivity
 
 def getSystemLang():
     l = mActivity.getResources().getConfiguration().locale.toString()
-    print "LOCALE: %s" % l
+    print("LOCALE: %s" % l)
     match = re.search("^([a-z]{2})_[A-Z]+.*", l)
     if match:
         return match.group(1)
@@ -117,7 +117,7 @@ class Service(SystemService):
 
     def runGeneric(self, what, pidid):
         if self.isRunning(pidid):
-            print "Skip starting %s, already running as %s" % (what, self.getPid(pidid))
+            print("Skip starting %s, already running as %s" % (what, self.getPid(pidid)))
             return False
         service_fullname = activity.getPackageName() + '.Service' + what
         service = autoclass(service_fullname)
