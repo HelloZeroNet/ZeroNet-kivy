@@ -55,7 +55,7 @@ with open(env['pidfile'], "w") as f:
     f.close()
 
 if True:  # so beautification does not move this to the top
-    import zeronet
+    import zeronet # this is only available AFTER sys.path.insert, since it isn't anywhere in this directory
 
 
 def main():

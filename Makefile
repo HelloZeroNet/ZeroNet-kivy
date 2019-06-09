@@ -25,7 +25,7 @@ env:
 	sudo add-apt-repository ppa:kivy-team/kivy -y
 	sudo apt-get update
 	sudo apt-get install -y build-essential cmake swig ccache git libtool pkg-config libncurses5:i386 libstdc++6:i386 libgtk2.0-0:i386 libpangox-1.0-0:i386 libpangoxft-1.0-0:i386 libidn11:i386 python2.7 python2.7-dev openjdk-8-jdk unzip zlib1g-dev zlib1g:i386
-	sudo apt-get install -y automake aidl libbz2-dev libffi-dev
+	sudo apt-get install -y automake aidl libbz2-dev libffi-dev lld
 	sudo apt-get install -y python-kivy
 	sudo pip2 install --upgrade Cython==0.28.6
 	sudo pip2 install --upgrade colorama appdirs 'sh>=1.10,<1.12.5' jinja2 six clint requests
