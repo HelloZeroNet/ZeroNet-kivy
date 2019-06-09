@@ -7,7 +7,7 @@ for dep in buildozer python-for-android; do
 		git remote add upstream git@github.com:kivy/$dep
 	fi
 	git fetch -p
-	git branch -d master
+	git branch -D master
 	git reset --hard origin/master
 	git checkout -b master
 	git rebase upstream/master
