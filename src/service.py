@@ -42,6 +42,7 @@ if env["platform"] == "android":
 print("env %s" % env)
 
 sys.path.insert(1,  env['srcdir'])
+sys.path.insert(1,  env['srcdir'] + '/src') # insert $src/src too, since sometimes it can't find itself
 print("srcdir: %s" % env['srcdir'])
 print("sys.path: %s" % sys.path)
 
