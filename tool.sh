@@ -136,7 +136,7 @@ case "$1" in
     V=$(echo $(cat src/zero/src/Config.py | grep self.version | sed -r "s|self\.version = ['\"](.*)['\"]|\1|g" | head -n 1))
     if [ "$V" != "$CUR_VERSION" ]; then echo ".version.sh \$VER_SUFFIX needs to be reset, major version change: $CUR_VERSION != $V" && exit 2; fi
     cd src/zero && cp src/Config.py src/Config.py_ && sed -r "s|self\.version = ['\"](.*)['\"]|self.version = \"\1.$VER_SUFFIX\"|g" -i src/Config.py
-    echo ZGlmZiAtLWdpdCBhL3NyYy9Db25maWcucHkgYi9zcmMvQ29uZmlnLnB5CmluZGV4IGZkN2IwNmJjLi45NTkwNTdmNSAxMDA2NDQKLS0tIGEvc3JjL0NvbmZpZy5weQorKysgYi9zcmMvQ29uZmlnLnB5CkBAIC01NzgsNyArNTc4LDcgQEAgY2xhc3MgQ29uZmlnKG9iamVjdCk6CiAKICAgICAgICAgbG9nZ2luZy5nZXRMb2dnZXIoJycpLm5hbWUgPSAiLSIgICMgUmVtb3ZlIHJvb3QgcHJlZml4CiAKLSAgICAgICAgc2VsZi5pbml0Q29uc29sZUxvZ2dlcigpCisgICAgICAgICMgc2VsZi5pbml0Q29uc29sZUxvZ2dlcigpCiAgICAgICAgIHNlbGYuaW5pdEZpbGVMb2dnZXIoKQogCiBjb25maWcgPSBDb25maWcoc3lzLmFyZ3YpCg== | base64 -d | git apply -
+    echo ZGlmZiAtLWdpdCBhL3NyYy9Db25maWcucHkgYi9zcmMvQ29uZmlnLnB5CmluZGV4IGJjZDlkM2M3Li5jYjI4MWM1MyAxMDA2NDQKLS0tIGEvc3JjL0NvbmZpZy5weQorKysgYi9zcmMvQ29uZmlnLnB5CkBAIC01ODksNyArNTg5LDcgQEAgY2xhc3MgQ29uZmlnKG9iamVjdCk6CiAgICAgICAgIGxvZ2dpbmcuZ2V0TG9nZ2VyKCcnKS5uYW1lID0gIi0iICAjIFJlbW92ZSByb290IHByZWZpeAogICAgICAgICBsb2dnaW5nLmdldExvZ2dlcigiZ2V2ZW50d2Vic29ja2V0LmhhbmRsZXIiKS5zZXRMZXZlbChsb2dnaW5nLldBUk5JTkcpICAjIERvbid0IGxvZyB3cyBkZWJ1ZyBtZXNzYWdlcwogCi0gICAgICAgIHNlbGYuaW5pdENvbnNvbGVMb2dnZXIoKQorICAgICAgICAjc2VsZi5pbml0Q29uc29sZUxvZ2dlcigpCiAgICAgICAgIHNlbGYuaW5pdEZpbGVMb2dnZXIoKQogCiBjb25maWcgPSBDb25maWcoc3lzLmFyZ3YpCg== | base64 -d | git apply -
     cd ../../
     touch .pre
     ;;
