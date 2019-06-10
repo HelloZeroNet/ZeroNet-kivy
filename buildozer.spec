@@ -41,7 +41,7 @@ version.filename = %(source.dir)s/zero/src/Config.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = sqlite3,openssl,m2crypto,gevent,greenlet,msgpack-python,hostpython3,git+https://github.com/kivy/plyer,android,kivy,sentry_sdk,urllib3,certifi
+requirements = sqlite3,openssl,m2crypto,gevent,'greenlet>=0.4.14',msgpack-python,hostpython3,git+https://github.com/kivy/plyer,android,kivy,sentry_sdk,urllib3,certifi
 p4a.branch = master
 
 # (str) Custom source folders for requirements
