@@ -59,7 +59,7 @@ if True:  # so beautification does not move this to the top
 
 
 def main():
-    zeronet.main()
+    zeronet.start()
 
 if __name__ == '__main__':
     wrapSentry(main)
