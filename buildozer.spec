@@ -43,6 +43,7 @@ version.filename = %(source.dir)s/zero/src/Config.py
 # comma seperated e.g. requirements = sqlite3,kivy
 requirements = sqlite3,openssl,m2crypto,gevent,greenlet,msgpack-python,hostpython3,git+https://github.com/kivy/plyer,android,kivy,sentry_sdk,urllib3,certifi
 p4a.branch = master
+p4a.fork = mkg20001
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
