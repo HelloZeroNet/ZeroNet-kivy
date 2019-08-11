@@ -38,29 +38,29 @@ def needUpdate(src, dst, backup):
     if conf is not None and confsrc is not None:
         return parseRev(conf) < parseRev(confsrc)
     else:
-        print "Some files are missing, need to update"
+        print("Some files are missing, need to update")
         return True
 
 
 def update(src, dst, backup):
     if not needUpdate(src, dst, backup):
-        print "update not required, skipping"
+        print("update not required, skipping")
         return
     try:
         if os.path.exists(backup):
             # Prepare for updating the exiting code and importing data
             shutil.rmtree(backup)
-            print "zero_backup removed"
+            print("zero_backup removed")
         if os.path.exists(dst):
             os.rename(dst,  backup)
-            print "zero renamed to zero_backup"
+            print("zero renamed to zero_backup")
         try:
             # Copy ZeroNet entirely to external, shutil.copytree will refuse to
             # copy if destination exists.
             shutil.copytree(src, dst)
         except:
             traceback.print_exc()
-        print "zero copied to external zero"
+        print("zero copied to external zero")
         if os.path.exists(backup):
             for import_dir in ["data", "log", "zeronet.conf"]:
                 if os.path.exists(os.path.join(backup, import_dir)):
@@ -69,7 +69,7 @@ def update(src, dst, backup):
                                     os.path.join(dst,  import_dir))  # import data
                     except:
                         traceback.print_exc()
-                    print "%s imported" % import_dir
+                    print("%s imported" % import_dir)
     except:
         traceback.print_exc()
 
@@ -80,7 +80,7 @@ def setConfig(conf):
 
     def defaultValue(key, value):
         if key not in c:
-            print "Applying default value %s for field %s" % (value, key)
+            print("Applying default value %s for field %s" % (value, key))
             saveConfigValue(conf, key, value)
     defaultValue("language", os_platform.getSystemLang())
     defaultValue("keep_ssl_cert", "")
@@ -128,11 +128,11 @@ class SystemService():
         self.platform = platform
         self.count = 0
         self.config = os.path.join(self.getPath("zero"), "zeronet.conf")
-        print "ZeroNet_Dir=%s" % self.dir
+        print("ZeroNet_Dir=%s" % self.dir)
         mkdirp(self.dir)
 
     def setEnv(self):
-        print "Setting Env"
+        print("Setting Env")
         env = dict(
             {'srcdir': self.getPath("zero"),
              'platform': str(self.platform),
@@ -175,5 +175,5 @@ class SystemService():
         self.runZero()
 
     def runZero(self):
-        print "Running ZeroNet"
+        print("Running ZeroNet")
         self.runService()

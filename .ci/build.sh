@@ -17,8 +17,8 @@ disable_var() {
 }
 
 if [ -z "$CI_COMMIT_TAG" ]; then # build a nightly
-  replace_var package.domain luna.mkg20001
-  replace_var title ZeroNetN
+  replace_var package.domain luna3.mkg20001
+  replace_var title ZeroNetN3
   # disable_var version.regex
   # disable_var version.filename
   # replace_var version "$CUR_VERSION.$(date +%s)"

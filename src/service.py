@@ -39,26 +39,27 @@ if env["platform"] == "android":
     notification = notifi.build()
     Service.startForeground(233,notification)
 
-print "env %s" % env
+print("env %s" % env)
 
 sys.path.insert(1,  env['srcdir'])
-print "srcdir: %s" % env['srcdir']
-print "sys.path: %s" % sys.path
+sys.path.insert(1,  env['srcdir'] + '/src') # insert $src/src too, since sometimes it can't find itself
+print("srcdir: %s" % env['srcdir'])
+print("sys.path: %s" % sys.path)
 
 os.chdir(env['srcdir'])
 
-print "sys.argv: %s" % sys.argv
+print("sys.argv: %s" % sys.argv)
 
 with open(env['pidfile'], "w") as f:
     f.write(str(os.getpid()))
     f.close()
 
 if True:  # so beautification does not move this to the top
-    import zeronet
+    import zeronet # this is only available AFTER sys.path.insert, since it isn't anywhere in this directory
 
 
 def main():
-    zeronet.main()
+    zeronet.start()
 
 if __name__ == '__main__':
     wrapSentry(main)

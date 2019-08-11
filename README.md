@@ -1,5 +1,6 @@
 # ZeroNet-kivy
 [简体中文](./README-zh-cn.md)
+[Support](https://t.me/zeronet_android)
 
 This app is a simple GUI to control the ZeroNet client. It is packaged using buildozer and uses [Kivy](https://kivy.io).
 

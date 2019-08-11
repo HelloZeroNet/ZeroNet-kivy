@@ -30,14 +30,14 @@ class Translate(dict):
     def load(self):
         if os.path.isfile(self.lang_file):
             data = json.load(open(self.lang_file))
-            print "Loaded translate file: %s (%s entries)" % (self.lang_file, len(data))
+            print("Loaded translate file: %s (%s entries)" % (self.lang_file, len(data)))
             dict.__init__(self, data)
             return True
         else:
             data = {}
             dict.__init__(self, data)
             self.clear()
-            print "Translate file not exists: %s" % self.lang_file
+            print("Translate file not exists: %s" % self.lang_file)
             return False
 
     def format(self, s, kwargs, nested=False):
@@ -86,7 +86,7 @@ class Translate(dict):
         data = data.decode("utf8")
 
         patterns = []
-        for key, val in translate_table.items():
+        for key, val in list(translate_table.items()):
             # Problematic string: only match if called between _(" ") function
             if key.startswith("_("):
                 key = key.replace("_(", "").replace(

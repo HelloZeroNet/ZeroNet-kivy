@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import os
 
 
@@ -9,7 +9,7 @@ def parseConfig(config_file):
     # Load config file
     res = dict({})
     if os.path.isfile(config_file):
-        config = ConfigParser.ConfigParser(allow_no_value=True)
+        config = configparser.ConfigParser(allow_no_value=True)
         config.read(config_file)
         for section in config.sections():
             for key, val in config.items(section):
