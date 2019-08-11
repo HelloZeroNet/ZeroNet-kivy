@@ -59,6 +59,18 @@ BoxLayout:
         orientation: "vertical"
 
         Label:
+            id: Support
+            text: "[ref=t.me/zeronet_android][b]Support[/b][/ref]"
+            on_ref_press: browser("https://t.me/zeronet_android")
+
+        Label:
+            id: SupportDesc
+            text: _("Android App Discussion & Support")
+
+    BoxLayout:
+        orientation: "vertical"
+
+        Label:
             id: ZeroHello
             text: "[ref=1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D][b]ZeroHello[/b][/ref]"
             on_ref_press: app.url_click("1HeLLo4uzjaLetFx6NH3PMwFP3qbRbTf3D")
@@ -66,18 +78,6 @@ BoxLayout:
         Label:
             id: ZeroHelloDesc
             text: _("ZeroNet Homepage")
-
-    BoxLayout:
-        orientation: "vertical"
-
-        Label:
-            id: ZeroBoard
-            text: "[ref=Board.ZeroNetwork.bit][b]ZeroBoard[/b][/ref]"
-            on_ref_press: app.url_click("Board.ZeroNetwork.bit")
-
-        Label:
-            id: ZeroBoardDesc
-            text: _("Simple Messaging Board")
 
     BoxLayout:
         orientation: "vertical"
