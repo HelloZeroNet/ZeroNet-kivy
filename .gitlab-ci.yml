@@ -58,7 +58,7 @@ package:
   script:
     - ./.ci/package.sh
   only:
-    - py3
+    - master
     - tags
   artifacts:
     paths:
@@ -69,7 +69,7 @@ release-nightly:
   script:
   - ./.ci/release-nightly.sh
   only:
-  - py3
+  - master
   tags:
   - argon
   artifacts:
