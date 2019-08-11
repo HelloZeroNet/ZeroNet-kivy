@@ -41,7 +41,7 @@ version.filename = %(source.dir)s/zero/src/Config.py
 
 # (list) Application requirements
 # comma seperated e.g. requirements = sqlite3,kivy
-requirements = sqlite3,openssl,m2crypto,'gevent-websocket>=0.10.1',gevent,'greenlet>=0.4.14',msgpack-python,hostpython3,git+https://github.com/kivy/plyer,android,kivy,sentry_sdk,urllib3,certifi,merkletools,coincurve,bitcoin,socks
+requirements = sqlite3,openssl,m2crypto,'gevent-websocket>=0.10.1',gevent,'greenlet>=0.4.14',msgpack-python,hostpython3,git+https://github.com/kivy/plyer,android,kivy,sentry_sdk,urllib3,certifi,merkletools,coincurve,bitcoin,PySocks,bencode
 p4a.branch = master
 p4a.fork = mkg20001
 
