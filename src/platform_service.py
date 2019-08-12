@@ -33,8 +33,8 @@ def findFile(files):
 def needUpdate(src, dst, backup):
     if not os.path.exists(dst):
         return True
-    conf = findFile([os.path.join(dst, "src", "Config.py"),os.path.join(dst, "src", "Config.py_")])
-    confsrc = findFile([os.path.join(src, "src", "Config.py"),os.path.join(src, "src", "Config.py_")])
+    conf = findFile([os.path.join(dst, "src", "Config.py"), os.path.join(dst, "src", "Config.py_")])
+    confsrc = findFile([os.path.join(src, "src", "Config.py"), os.path.join(src, "src", "Config.py_")])
     if conf is not None and confsrc is not None:
         return parseRev(conf) < parseRev(confsrc)
     else:
@@ -82,8 +82,9 @@ def setConfig(conf):
         if key not in c:
             print("Applying default value %s for field %s" % (value, key))
             saveConfigValue(conf, key, value)
-    defaultValue("language", os_platform.getSystemLang())
-    defaultValue("keep_ssl_cert", "")
+    defaultValue("language", os_platform.getSystemLang()) # set langauge by default to system language
+    defaultValue("keep_ssl_cert", "") # keep m2crypto cert
+    defaultValue("dist_type", "kivy") # set dist type to kivy
     if os_platform.getDebug():
         defaultValue("debug", "")
         # Optional, if you are already running a zeronet instance
