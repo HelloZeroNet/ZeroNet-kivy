@@ -85,8 +85,9 @@ def setConfig(conf):
     defaultValue("language", os_platform.getSystemLang()) # set langauge by default to system language
     defaultValue("keep_ssl_cert", "") # keep m2crypto cert
     defaultValue("dist_type", "kivy") # set dist type to kivy
-    if os_platform.getDebug():
+    if os_platform.getDebug(): # enable debugging, if release is debug
         defaultValue("debug", "")
+        defaultValue("debug_socket", "")
         # Optional, if you are already running a zeronet instance
         # defaultValue("fileserver_port","15444")
         # defaultValue("ui_port","8898")
