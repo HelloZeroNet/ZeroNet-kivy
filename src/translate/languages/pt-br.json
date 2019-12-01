@@ -1,3 +1,13 @@
 {
-  "string.feedback":"Para fechar bem o serviço de base da ZeroNet,\n por favor clique em ZeroHello\"s top-left [font=DroidSansFallback]┇botão [/font],\n escolha Desligar ZeroNet, obrigado!\nMais informações e discussões por favor clique aqui! (En version)[/ref]"
+	"Welcome to ZeroNet!":"Bem-vindo ao ZeroNet!",
+	"Below you see sites which are available in ZeroNet":"Abaixo você vê sites disponíveis no ZeroNet",
+	"ZeroNet Homepage":"Página Inicial ZeroNet",
+	"Simple Messaging Board":"Quadro Simples de mensagens",
+	"Reddit-Like, Decentralized Forum":"Fórum descentralizado, semelhante ao Reddit",
+	"Microblogging Platform":"Plataforma de Microblogging",
+	"End-to-End Encrypted Mailing":"Correspondência criptografada de ponta a ponta",
+	"Peer-to-Peer Social Network":"Rede social Peer-to-Peer",
+	"Reddit-Like, Decentralized Forum for China":"Fórum descentralizado e semelhante ao Reddit para a China",
+	"[b]Report a Bug[/b]": "[b]Reportar um erro[/b]",
+	"[b]Donate[/b]": "[b]Doar[/b]"
 }
