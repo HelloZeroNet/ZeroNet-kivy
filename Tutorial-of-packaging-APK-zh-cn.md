@@ -7,7 +7,7 @@
  - Git
  - Make
  - ADB
- - Docker or Vagrant (vagrant的话请看文章最后）
+ - Docker or Vagrant
 
 ## 初始步骤
  - 首先 `git clone https://github.com/HelloZeroNet/ZeroNet-kivy --recursive`
