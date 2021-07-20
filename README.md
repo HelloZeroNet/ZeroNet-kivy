@@ -2,7 +2,7 @@
 [简体中文](./README-zh-cn.md)
 [Support](https://t.me/zeronet_android)
 
-This app is a simple GUI to control the ZeroNet client. It is packaged using buildozer and uses [Kivy](https://kivy.io).
+This app is a simple GUI to control the ZeroNet client. It is packaged using buildozer and uses [Kivy](https://kivy.org).
 
 Currently the code of this repo only works on Android, anyone interested in iOS development is welcome to contribute. Simply drop your comment on [this page](https://github.com/HelloZeroNet/ZeroNet-kivy/issues/35) if you want to become a maintainer for that platform!
 Currently this project is in Alpha phase, lack of GUI functionalities and creative design, containing many code for testing purpose. Please feel free to contribute!
